@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="red700">#dd0d3e</color>
-    <color name="red900">#c20029</color>
-    <color name="status_bar">@color/red900</color>
+    <color name="orange700">#f57c00</color>
+    <color name="orange900">#e65100</color>
+    <color name="status_bar">@color/orange900</color>
 </resources>

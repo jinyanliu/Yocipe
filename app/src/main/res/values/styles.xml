@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="Theme.Yocipe" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/red700</item>
-        <item name="colorPrimaryDark">@color/red900</item>
-        <item name="colorAccent">@color/red700</item>
+        <item name="colorPrimary">@color/orange700</item>
+        <item name="colorPrimaryDark">@color/orange900</item>
+        <item name="colorAccent">@color/orange700</item>
         <item name="android:statusBarColor">@color/status_bar</item>
     </style>
 </resources>
