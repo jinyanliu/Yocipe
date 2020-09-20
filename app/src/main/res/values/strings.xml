@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Yocipe</string>
+    <string name="home">Home</string>
+    <string name="favorite">Favorite</string>
 </resources>

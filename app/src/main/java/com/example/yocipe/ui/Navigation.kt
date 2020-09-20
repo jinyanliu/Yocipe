@@ -9,10 +9,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.yocipe.utils.getMutableStateOf
 
-enum class ScreenName { HOME, RECIPE }
+enum class ScreenName { HOME, FAVORITE, RECIPE }
 
 sealed class Screen(val id: ScreenName) {
     object Home : Screen(ScreenName.HOME)
+    object Favorite : Screen(ScreenName.FAVORITE)
     data class Recipe(val recipeId: String) : Screen(ScreenName.RECIPE)
 }
 
@@ -32,6 +33,7 @@ private fun Screen.toBundle(): Bundle {
 private fun Bundle.toScreen(): Screen {
     return when (ScreenName.valueOf(getStringOrThrow(SIS_NAME))) {
         ScreenName.HOME -> Screen.Home
+        ScreenName.FAVORITE -> Screen.Favorite
         ScreenName.RECIPE -> {
             val recipeId = getStringOrThrow(SIS_RECIPE)
             Screen.Recipe(recipeId)
@@ -40,7 +42,7 @@ private fun Bundle.toScreen(): Screen {
 }
 
 private fun Bundle.getStringOrThrow(key: String) =
-        requireNotNull(getString(key)) { "Missing key '$key' in $this" }
+    requireNotNull(getString(key)) { "Missing key '$key' in $this" }
 
 class NavigationViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() {
 
