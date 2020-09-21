@@ -45,7 +45,6 @@ import com.example.yocipe.R
 import com.example.yocipe.data.recipes.RecipesRepository
 import com.example.yocipe.model.Recipe
 import com.example.yocipe.ui.AppDrawer
-import com.example.yocipe.ui.RecipeCardTop
 import com.example.yocipe.ui.Screen
 import com.example.yocipe.ui.SwipeToRefreshLayout
 import com.example.yocipe.ui.state.UiState
@@ -226,7 +225,7 @@ private fun RecipeListTopSection(recipe: Recipe, navigateTo: (Screen) -> Unit) {
     ProvideEmphasis(emphasis = EmphasisAmbient.current.high) {
         Text(
             modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
-            text = "Top stories for you",
+            text = "Top recipes for you",
             style = MaterialTheme.typography.subtitle1
         )
     }

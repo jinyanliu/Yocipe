@@ -1,4 +1,4 @@
-package com.example.yocipe.ui
+package com.example.yocipe.ui.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.Text
@@ -15,7 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.ConfigurationAmbient
 import androidx.compose.ui.unit.dp
+import androidx.core.os.ConfigurationCompat
 import com.example.yocipe.model.Recipe
 
 @Composable
@@ -39,6 +41,16 @@ fun RecipeCardTop(recipe: Recipe, modifier: Modifier = Modifier) {
             )
             Text(
                 text = recipe.instructions[0],
+                style = typography.body2
+            )
+        }
+        ProvideEmphasis(emphasisLevels.medium) {
+            Text(
+                text = "read more".toUpperCase(
+                    ConfigurationCompat.getLocales(
+                        ConfigurationAmbient.current
+                    ).get(0)
+                ),
                 style = typography.body2
             )
         }
