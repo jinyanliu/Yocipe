@@ -1,9 +1,11 @@
 package com.example.yocipe.ui.recipe
 
 import androidx.compose.foundation.Icon
+import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -55,8 +57,6 @@ fun RecipeScreen(
     isFavorite: Boolean,
     onToggleFavorite: () -> Unit
 ) {
-    var ratio by savedInstanceState { 1.0 }
-
     Column {
         Row {
             IconButton(
@@ -68,6 +68,6 @@ fun RecipeScreen(
             Spacer(modifier = Modifier.weight(1f))
             FavoriteButton(isFavorite = isFavorite, onClick = onToggleFavorite)
         }
-        RecipeContent(recipe, ratio)
+        RecipeContent(recipe)
     }
 }

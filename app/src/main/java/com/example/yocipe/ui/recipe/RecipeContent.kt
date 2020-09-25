@@ -14,7 +14,11 @@ import androidx.compose.material.Divider
 import androidx.compose.material.EmphasisAmbient
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ProvideEmphasis
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.savedinstancestate.savedInstanceState
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -27,15 +31,14 @@ private val defaultSpacerSize = 16.dp
 
 @Composable
 fun RecipeContent(
-    recipe: Recipe,
-    ratio: Double
+    recipe: Recipe
 ) {
     val modifier = Modifier.padding(horizontal = defaultSpacerSize)
     ScrollableColumn {
         RecipeHeaderImage(recipe)
         Text(text = recipe.name, style = MaterialTheme.typography.h4, modifier = modifier)
         Spacer(Modifier.preferredHeight(defaultSpacerSize))
-        IngredientsList(recipe, ratio, modifier)
+        IngredientsList(recipe, modifier)
         Spacer(Modifier.preferredHeight(defaultSpacerSize))
         InstructionsList(recipe, modifier)
         Spacer(Modifier.preferredHeight(defaultSpacerSize))
@@ -55,12 +58,26 @@ private fun RecipeHeaderImage(recipe: Recipe) {
 }
 
 @Composable
-private fun IngredientsList(recipe: Recipe, ratio: Double, modifier: Modifier) {
+private fun IngredientsList(recipe: Recipe, modifier: Modifier) {
+
+    var ratio by savedInstanceState { 1.0 }
+
     Column(modifier = modifier) {
-        Text(
-            text = stringResource(id = R.string.ingredients_list),
-            style = MaterialTheme.typography.h6
-        )
+        Row {
+            Text(
+                text = stringResource(id = R.string.ingredients_list),
+                style = MaterialTheme.typography.h6
+            )
+            TextButton(
+                onClick = { ratio *= 2 },
+                modifier = Modifier
+            ) {
+                Text(
+                    text = "X2.0",
+                    style = MaterialTheme.typography.body2
+                )
+            }
+        }
         Spacer(Modifier.preferredHeight(8.dp))
         recipe.ingredients.forEach { ingredient ->
             SingleIngredient(
