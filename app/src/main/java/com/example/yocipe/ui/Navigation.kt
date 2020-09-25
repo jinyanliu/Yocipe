@@ -45,6 +45,7 @@ private fun Bundle.getStringOrThrow(key: String) =
     requireNotNull(getString(key)) { "Missing key '$key' in $this" }
 
 class NavigationViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() {
+    var lastScreen: Screen? = null
 
     var currentScreen: Screen by savedStateHandle.getMutableStateOf<Screen>(
         key = SIS_SCREEN,
@@ -57,12 +58,13 @@ class NavigationViewModel(private val savedStateHandle: SavedStateHandle) : View
     @MainThread
     fun onBack(): Boolean {
         val wasHandled = currentScreen != Screen.Home
-        currentScreen = Screen.Home
+        currentScreen = lastScreen ?: Screen.Home
         return wasHandled
     }
 
     @MainThread
     fun navigateTo(screen: Screen) {
+        lastScreen = currentScreen
         currentScreen = screen
     }
 }

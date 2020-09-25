@@ -102,7 +102,7 @@ fun HomeScreen(
         },
         topBar = {
             TopAppBar(
-                title = { Text(text = stringResource(id = R.string.app_name)) },
+                title = { Text(text = stringResource(id = R.string.favorite)) },
                 navigationIcon = {
                     IconButton(onClick = { scaffoldState.drawerState.open() }) {
                         Icon(Icons.Rounded.RestaurantMenu)
