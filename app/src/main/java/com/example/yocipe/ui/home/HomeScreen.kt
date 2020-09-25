@@ -10,6 +10,7 @@ import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.contentColor
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Stack
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -214,9 +215,7 @@ private fun RecipeList(
 
     ScrollableColumn(modifier) {
         RecipeListTopSection(recipeTop, navigateTo)
-/*        RecipesListSimpleSection(recipesSimple, navigateTo, favorites, onToggleFavorites)
-        RecipeListPopularSection(recipesPopular, navigateTo)
-        RecipeListHistorySection(recipesHistory, navigateTo)*/
+        RecipesListSimpleSection(recipesSimple, navigateTo, favorites, onToggleFavorites)
     }
 }
 
@@ -283,6 +282,26 @@ private fun ErrorSnackbar(
                 }
             }
         )
+    }
+}
+
+@Composable
+private fun RecipesListSimpleSection(
+    recipes: List<Recipe>,
+    navigateTo: (Screen) -> Unit,
+    favorites: Set<String>,
+    onToggleFavorite: (String) -> Unit
+) {
+    Column {
+        recipes.forEach { recipe ->
+            RecipeCardSimple(
+                recipe = recipe,
+                navigateTo = navigateTo,
+                isFavorite = favorites.contains(recipe.id),
+                onToggleFavorite = { onToggleFavorite(recipe.id) }
+            )
+            RecipeListDivider()
+        }
     }
 }
 
