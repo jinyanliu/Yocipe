@@ -14,8 +14,8 @@ import androidx.compose.material.IconToggleButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ProvideEmphasis
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Bookmark
+import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -86,16 +86,19 @@ fun FavoriteButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    IconToggleButton(checked = isFavorite, onCheckedChange = { onClick() }) {
+    IconToggleButton(
+        checked = isFavorite,
+        onCheckedChange = { onClick() }
+    ) {
         modifier.fillMaxSize()
         if (isFavorite) {
             Icon(
-                asset = Icons.Filled.Favorite,
+                asset = Icons.Filled.Bookmark,
                 modifier = modifier
             )
         } else {
             Icon(
-                asset = Icons.Filled.FavoriteBorder,
+                asset = Icons.Filled.BookmarkBorder,
                 modifier = modifier
             )
         }

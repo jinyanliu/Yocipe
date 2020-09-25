@@ -210,8 +210,6 @@ private fun RecipeList(
 ) {
     val recipeTop = recipes[0]
     val recipesSimple = recipes.subList(0, 2)
-    val recipesPopular = recipes.subList(0, 2)
-    val recipesHistory = recipes.subList(0, 2)
 
     ScrollableColumn(modifier) {
         RecipeListTopSection(recipeTop, navigateTo)
