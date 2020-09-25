@@ -18,7 +18,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.yocipe.R
 import com.example.yocipe.model.Recipe
 
 private val defaultSpacerSize = 16.dp
@@ -35,11 +37,11 @@ fun RecipeContent(
         Spacer(Modifier.preferredHeight(defaultSpacerSize))
         RecipeHeaderImage(recipe)
         Text(text = recipe.name, style = MaterialTheme.typography.h4)
-        Spacer(Modifier.preferredHeight(8.dp))
+        Spacer(Modifier.preferredHeight(defaultSpacerSize))
         IngredientsList(recipe, ratio)
-        Spacer(Modifier.preferredHeight(24.dp))
-        //InstructionsList(recipe.instructions)
-        Spacer(Modifier.preferredHeight(48.dp))
+        Spacer(Modifier.preferredHeight(defaultSpacerSize))
+        InstructionsList(recipe)
+        Spacer(Modifier.preferredHeight(defaultSpacerSize))
     }
 }
 
@@ -58,13 +60,18 @@ private fun RecipeHeaderImage(recipe: Recipe) {
 @Composable
 private fun IngredientsList(recipe: Recipe, ratio: Double) {
     Column {
+        Text(
+            text = stringResource(id = R.string.ingredients_list),
+            style = MaterialTheme.typography.h6
+        )
+        Spacer(Modifier.preferredHeight(8.dp))
         recipe.ingredients.forEach { ingredient ->
             SingleIngredient(
                 ingredient = ingredient,
                 ratio = ratio,
-                modifier = Modifier.padding(top = 4.dp)
+                modifier = Modifier.padding(top = 4.dp, bottom = 4.dp)
             )
-            IngredientListDivider()
+            RecipeContentListDivider()
         }
     }
 }
@@ -75,16 +82,21 @@ private fun SingleIngredient(
     ratio: Double,
     modifier: Modifier
 ) {
+    val amountDigit = ingredient.second.split(" ")[0].toDouble() * ratio
+    val amountString =
+        "%.1f".format(amountDigit).dropLastWhile { it == '0' }.dropLastWhile { it == ',' }
+    val measurementUnit = ingredient.second.split(" ")[1]
+
     Row(modifier) {
         ProvideEmphasis(EmphasisAmbient.current.medium) {
-            val textStyle = MaterialTheme.typography.body1
+            val textStyle = MaterialTheme.typography.subtitle1
             Text(
                 text = ingredient.first,
                 style = textStyle,
                 modifier = Modifier.weight(1.0f)
             )
             Text(
-                text = ingredient.second,
+                text = "$amountString $measurementUnit",
                 style = textStyle
             )
         }
@@ -92,8 +104,42 @@ private fun SingleIngredient(
 }
 
 @Composable
-private fun IngredientListDivider() {
+private fun RecipeContentListDivider() {
     Divider(
         color = MaterialTheme.colors.onSurface.copy(alpha = 0.08f)
     )
+}
+
+@Composable
+private fun InstructionsList(recipe: Recipe) {
+    Column {
+        Text(
+            text = stringResource(id = R.string.instructions_list),
+            style = MaterialTheme.typography.h6
+        )
+        Spacer(Modifier.preferredHeight(8.dp))
+        recipe.instructions.forEach { instruction ->
+            SingleInstruction(
+                instruction = instruction,
+                modifier = Modifier.padding(top = 4.dp, bottom = 4.dp)
+            )
+            RecipeContentListDivider()
+        }
+    }
+}
+
+@Composable
+private fun SingleInstruction(
+    instruction: String,
+    modifier: Modifier
+) {
+    Row(modifier) {
+        ProvideEmphasis(EmphasisAmbient.current.medium) {
+            val textStyle = MaterialTheme.typography.subtitle1
+            Text(
+                text = instruction,
+                style = textStyle
+            )
+        }
+    }
 }

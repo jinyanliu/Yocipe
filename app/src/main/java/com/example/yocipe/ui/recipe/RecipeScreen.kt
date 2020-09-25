@@ -56,7 +56,7 @@ fun RecipeScreen(
     isFavorite: Boolean,
     onToggleFavorite: () -> Unit
 ) {
-    var ratio by savedInstanceState { 0.1 }
+    var ratio by savedInstanceState { 1.0 }
 
     Scaffold(
         topBar = {
