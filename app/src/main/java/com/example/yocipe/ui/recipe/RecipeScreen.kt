@@ -1,11 +1,10 @@
 package com.example.yocipe.ui.recipe
 
 import androidx.compose.foundation.Icon
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
@@ -58,22 +57,17 @@ fun RecipeScreen(
 ) {
     var ratio by savedInstanceState { 1.0 }
 
-    Scaffold(
-        topBar = {
-            TopAppBar {
-                IconButton(
-                    onClick = onBack,
-                    modifier = Modifier.gravity(Alignment.CenterVertically)
-                ) {
-                    Icon(Icons.Filled.ArrowBack)
-                }
-                Spacer(modifier = Modifier.weight(1f))
-                FavoriteButton(isFavorite = isFavorite, onClick = onToggleFavorite)
+    Column {
+        Row {
+            IconButton(
+                onClick = onBack,
+                modifier = Modifier.gravity(Alignment.CenterVertically)
+            ) {
+                Icon(Icons.Filled.ArrowBack)
             }
-        },
-        bodyContent = { innerPadding ->
-            val modifier = Modifier.padding(innerPadding)
-            RecipeContent(recipe, modifier, ratio)
+            Spacer(modifier = Modifier.weight(1f))
+            FavoriteButton(isFavorite = isFavorite, onClick = onToggleFavorite)
         }
-    )
+        RecipeContent(recipe, ratio)
+    }
 }

@@ -28,19 +28,16 @@ private val defaultSpacerSize = 16.dp
 @Composable
 fun RecipeContent(
     recipe: Recipe,
-    modifier: Modifier,
     ratio: Double
 ) {
-    ScrollableColumn(
-        modifier = modifier.padding(horizontal = defaultSpacerSize)
-    ) {
-        Spacer(Modifier.preferredHeight(defaultSpacerSize))
+    val modifier = Modifier.padding(horizontal = defaultSpacerSize)
+    ScrollableColumn {
         RecipeHeaderImage(recipe)
-        Text(text = recipe.name, style = MaterialTheme.typography.h4)
+        Text(text = recipe.name, style = MaterialTheme.typography.h4, modifier = modifier)
         Spacer(Modifier.preferredHeight(defaultSpacerSize))
-        IngredientsList(recipe, ratio)
+        IngredientsList(recipe, ratio, modifier)
         Spacer(Modifier.preferredHeight(defaultSpacerSize))
-        InstructionsList(recipe)
+        InstructionsList(recipe, modifier)
         Spacer(Modifier.preferredHeight(defaultSpacerSize))
     }
 }
@@ -58,8 +55,8 @@ private fun RecipeHeaderImage(recipe: Recipe) {
 }
 
 @Composable
-private fun IngredientsList(recipe: Recipe, ratio: Double) {
-    Column {
+private fun IngredientsList(recipe: Recipe, ratio: Double, modifier: Modifier) {
+    Column(modifier = modifier) {
         Text(
             text = stringResource(id = R.string.ingredients_list),
             style = MaterialTheme.typography.h6
@@ -111,8 +108,8 @@ private fun RecipeContentListDivider() {
 }
 
 @Composable
-private fun InstructionsList(recipe: Recipe) {
-    Column {
+private fun InstructionsList(recipe: Recipe, modifier: Modifier) {
+    Column(modifier = modifier) {
         Text(
             text = stringResource(id = R.string.instructions_list),
             style = MaterialTheme.typography.h6
