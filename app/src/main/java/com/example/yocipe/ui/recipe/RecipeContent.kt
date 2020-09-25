@@ -1,5 +1,6 @@
 package com.example.yocipe.ui.recipe
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.Text
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.preferredHeight
 import androidx.compose.foundation.layout.preferredHeightIn
+import androidx.compose.foundation.layout.preferredWidth
 import androidx.compose.material.Divider
 import androidx.compose.material.EmphasisAmbient
 import androidx.compose.material.MaterialTheme
@@ -19,9 +21,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.savedinstancestate.savedInstanceState
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.yocipe.R
@@ -63,18 +67,63 @@ private fun IngredientsList(recipe: Recipe, modifier: Modifier) {
     var ratio by savedInstanceState { 1.0 }
 
     Column(modifier = modifier) {
-        Row {
+        Text(
+            text = stringResource(id = R.string.ingredients_list),
+            style = MaterialTheme.typography.h6
+        )
+        Spacer(Modifier.preferredHeight(8.dp))
+        Row(
+            verticalGravity = Alignment.CenterVertically,
+        ) {
             Text(
-                text = stringResource(id = R.string.ingredients_list),
-                style = MaterialTheme.typography.h6
+                text = "Quick adjust:",
+                style = MaterialTheme.typography.body2
             )
+            Spacer(Modifier.preferredWidth(8.dp))
             TextButton(
+                contentColor = MaterialTheme.colors.onSurface,
+                onClick = { ratio *= 0.5 },
+                border = BorderStroke(0.5.dp, colorResource(R.color.orange700)),
+                modifier = Modifier.preferredWidth(52.dp)
+            ) {
+                Text(
+                    text = "X0.5",
+                    style = MaterialTheme.typography.button
+                )
+            }
+            Spacer(Modifier.preferredWidth(8.dp))
+            TextButton(
+                contentColor = MaterialTheme.colors.onSurface,
                 onClick = { ratio *= 2 },
-                modifier = Modifier
+                border = BorderStroke(0.5.dp, colorResource(R.color.orange700)),
+                modifier = Modifier.preferredWidth(52.dp)
             ) {
                 Text(
                     text = "X2.0",
-                    style = MaterialTheme.typography.body2
+                    style = MaterialTheme.typography.button
+                )
+            }
+            Spacer(Modifier.preferredWidth(8.dp))
+            TextButton(
+                contentColor = MaterialTheme.colors.onSurface,
+                onClick = { ratio *= 3 },
+                border = BorderStroke(0.5.dp, colorResource(R.color.orange700)),
+                modifier = Modifier.preferredWidth(52.dp)
+            ) {
+                Text(
+                    text = "X3.0",
+                    style = MaterialTheme.typography.button
+                )
+            }
+            Spacer(Modifier.preferredWidth(8.dp))
+            TextButton(
+                contentColor = MaterialTheme.colors.onSurface,
+                onClick = { ratio = 1.0 },
+                border = BorderStroke(0.5.dp, colorResource(R.color.orange700))
+            ) {
+                Text(
+                    text = "Reset",
+                    style = MaterialTheme.typography.button
                 )
             }
         }
