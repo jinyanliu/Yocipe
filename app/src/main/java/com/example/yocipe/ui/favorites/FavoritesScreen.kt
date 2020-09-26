@@ -162,13 +162,6 @@ private fun LoadingContent(
 }
 
 @Composable
-private fun FullScreenLoading() {
-    Box(modifier = Modifier.fillMaxSize().wrapContentSize(Alignment.Center)) {
-        CircularProgressIndicator()
-    }
-}
-
-@Composable
 private fun HomeScreenErrorAndContent(
     recipes: UiState<List<Recipe>>,
     onRefresh: () -> Unit,
@@ -180,7 +173,12 @@ private fun HomeScreenErrorAndContent(
 ) {
     Stack(modifier = modifier.fillMaxSize()) {
         if (recipes.data != null) {
-            RecipeList(recipes.data, navigateTo, favorites, onToggleFavorite)
+            val favoriteRecipes = recipes.data.filter { favorites.contains(it.id) }
+            if (favoriteRecipes.isNotEmpty()) {
+                FavoriteRecipeList(favoriteRecipes, navigateTo, favorites, onToggleFavorite)
+            } else {
+                stringResource(id = R.string.empty_favorite_message).FullScreenMessage()
+            }
         } else if (!recipes.hasError) {
             TextButton(onClick = onRefresh, Modifier.fillMaxSize()) {
                 Text(
@@ -195,21 +193,6 @@ private fun HomeScreenErrorAndContent(
             onDismiss = onErrorDismiss,
             modifier = Modifier.gravity(Alignment.BottomCenter)
         )
-    }
-}
-
-@Composable
-private fun RecipeList(
-    recipes: List<Recipe>,
-    navigateTo: (Screen) -> Unit,
-    favorites: Set<String>,
-    onToggleFavorites: (String) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    val recipesSimple = recipes.subList(0, 2)
-
-    ScrollableColumn(modifier) {
-        FavoriteRecipeList(recipesSimple, navigateTo, favorites, onToggleFavorites)
     }
 }
 
@@ -265,20 +248,40 @@ private fun ErrorSnackbar(
 
 @Composable
 private fun FavoriteRecipeList(
-    recipes: List<Recipe>,
+    favoriteRecipes: List<Recipe>,
     navigateTo: (Screen) -> Unit,
     favorites: Set<String>,
     onToggleFavorite: (String) -> Unit
 ) {
-    Column {
-        recipes.filter { favorites.contains(it.id) }.forEach { recipe ->
-            RecipeCardSimple(
-                recipe = recipe,
-                navigateTo = navigateTo,
-                isFavorite = favorites.contains(recipe.id),
-                onToggleFavorite = { onToggleFavorite(recipe.id) }
-            )
-            RecipeListDivider()
+    ScrollableColumn {
+        Column {
+            favoriteRecipes.forEach { recipe ->
+                RecipeCardSimple(
+                    recipe = recipe,
+                    navigateTo = navigateTo,
+                    isFavorite = favorites.contains(recipe.id),
+                    onToggleFavorite = { onToggleFavorite(recipe.id) }
+                )
+                RecipeListDivider()
+            }
         }
     }
 }
+
+@Composable
+private fun FullScreenLoading() {
+    FullScreen { CircularProgressIndicator() }
+}
+
+@Composable
+private fun FullScreen(action: @Composable () -> Unit) {
+    Box(modifier = Modifier.fillMaxSize().wrapContentSize(Alignment.Center)) {
+        action()
+    }
+}
+
+@Composable
+fun String.FullScreenMessage() =
+    Box(modifier = Modifier.fillMaxSize().wrapContentSize(Alignment.Center)) {
+        Text(text = this)
+    }
