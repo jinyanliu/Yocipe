@@ -5,5 +5,9 @@
     <string name="tap_to_load_content">Tap to load content</string>
     <string name="ingredients_list">Ingredients List</string>
     <string name="instructions_list">Instructions List</string>
-    <string name="empty_favorite_message">You don\'t have any favorite recipes yet. Start by liking some.</string>
+
+    <!--FavoriteScreen-->
+    <string name="empty_favorite_main_message">You don\'t have any favorite recipes yet.</string>
+    <string name="empty_favorite_instruction_message">Start by adding some.</string>
+    <string name="empty_favorite_text_button_message">Go back to main screen.</string>
 </resources>

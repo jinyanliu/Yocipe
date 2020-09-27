@@ -45,9 +45,9 @@ import com.example.yocipe.ui.Screen
 import com.example.yocipe.ui.SwipeToRefreshLayout
 import com.example.yocipe.ui.home.RecipeCardSimple
 import com.example.yocipe.ui.state.UiState
-import com.example.yocipe.ui.theme.dimen8
 import com.example.yocipe.ui.theme.snackbarAction
 import com.example.yocipe.ui.utils.FullScreen
+import com.example.yocipe.ui.utils.FullScreenMessage
 import com.example.yocipe.utils.launchUiStateProducer
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -177,7 +177,11 @@ private fun HomeScreenErrorAndContent(
             if (favoriteRecipes.isNotEmpty()) {
                 FavoriteRecipeList(favoriteRecipes, navigateTo, favorites, onToggleFavorite)
             } else {
-                FullScreenMessage {
+                FullScreenMessage(
+                    mainMessage = stringResource(id = R.string.empty_favorite_main_message),
+                    instructionMessage = stringResource(id = R.string.empty_favorite_instruction_message),
+                    textButtonMessage = stringResource(id = R.string.empty_favorite_text_button_message)
+                ) {
                     navigateTo(Screen.Home)
                 }
             }
@@ -273,34 +277,4 @@ private fun FavoriteRecipeList(
 @Composable
 private fun FullScreenLoading() {
     FullScreen { CircularProgressIndicator() }
-}
-
-@Composable
-fun FullScreenMessage(
-    mainMessage: String? = null,
-    instructionMessage: String? = null,
-    textButtonMessage: String? = null,
-    textButtonAction: () -> Unit
-) = FullScreen {
-    Column {
-        val textStyle = MaterialTheme.typography.body2
-        Text(
-            text = "You don't have any favorite recipes yet.",
-            style = textStyle
-        )
-        Text(
-            text = "Start by adding some.",
-            style = textStyle,
-            modifier = Modifier.padding(top = dimen8)
-        )
-        TextButton(
-            onClick = { textButtonAction() },
-            modifier = Modifier.padding(top = dimen8)
-        ) {
-            Text(
-                text = "Go back to main screen",
-                style = textStyle
-            )
-        }
-    }
 }
