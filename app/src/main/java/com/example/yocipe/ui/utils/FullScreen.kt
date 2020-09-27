@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
@@ -24,6 +25,11 @@ fun FullScreen(action: @Composable () -> Unit) {
     ) {
         action()
     }
+}
+
+@Composable
+fun FullScreenLoading() {
+    FullScreen { CircularProgressIndicator() }
 }
 
 @Composable

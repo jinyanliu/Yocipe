@@ -50,6 +50,7 @@ import com.example.yocipe.ui.Screen
 import com.example.yocipe.ui.SwipeToRefreshLayout
 import com.example.yocipe.ui.state.UiState
 import com.example.yocipe.ui.theme.snackbarAction
+import com.example.yocipe.ui.utils.FullScreenLoading
 import com.example.yocipe.utils.launchUiStateProducer
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -160,13 +161,6 @@ private fun LoadingContent(
             },
             content = content
         )
-    }
-}
-
-@Composable
-private fun FullScreenLoading() {
-    Box(modifier = Modifier.fillMaxSize().wrapContentSize(Alignment.Center)) {
-        CircularProgressIndicator()
     }
 }
 

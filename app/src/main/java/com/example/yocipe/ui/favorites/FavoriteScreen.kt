@@ -47,6 +47,7 @@ import com.example.yocipe.ui.home.RecipeCardSimple
 import com.example.yocipe.ui.state.UiState
 import com.example.yocipe.ui.theme.snackbarAction
 import com.example.yocipe.ui.utils.FullScreen
+import com.example.yocipe.ui.utils.FullScreenLoading
 import com.example.yocipe.ui.utils.FullScreenMessage
 import com.example.yocipe.utils.launchUiStateProducer
 import kotlinx.coroutines.delay
@@ -272,9 +273,4 @@ private fun FavoriteRecipeList(
             }
         }
     }
-}
-
-@Composable
-private fun FullScreenLoading() {
-    FullScreen { CircularProgressIndicator() }
 }
