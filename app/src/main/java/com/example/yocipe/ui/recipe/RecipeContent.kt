@@ -30,22 +30,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.yocipe.R
 import com.example.yocipe.model.Recipe
-
-private val defaultSpacerSize = 16.dp
+import com.example.yocipe.ui.theme.dimen16
 
 @Composable
 fun RecipeContent(
     recipe: Recipe
 ) {
-    val modifier = Modifier.padding(horizontal = defaultSpacerSize)
+    val modifier = Modifier.padding(horizontal = dimen16)
     ScrollableColumn {
         RecipeHeaderImage(recipe)
         Text(text = recipe.name, style = MaterialTheme.typography.h4, modifier = modifier)
-        Spacer(Modifier.preferredHeight(defaultSpacerSize))
+        Spacer(Modifier.preferredHeight(dimen16))
         IngredientsList(recipe, modifier)
-        Spacer(Modifier.preferredHeight(defaultSpacerSize))
+        Spacer(Modifier.preferredHeight(dimen16))
         InstructionsList(recipe, modifier)
-        Spacer(Modifier.preferredHeight(defaultSpacerSize))
+        Spacer(Modifier.preferredHeight(dimen16))
     }
 }
 
@@ -57,7 +56,7 @@ private fun RecipeHeaderImage(recipe: Recipe) {
             .fillMaxWidth()
             .clip(shape = MaterialTheme.shapes.medium)
         Image(asset = image, imageModifier, contentScale = ContentScale.Crop)
-        Spacer(modifier = Modifier.preferredHeight(defaultSpacerSize))
+        Spacer(modifier = Modifier.preferredHeight(dimen16))
     }
 }
 

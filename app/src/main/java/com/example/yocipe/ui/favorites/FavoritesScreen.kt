@@ -4,7 +4,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.Box
 import androidx.compose.foundation.Icon
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.Text
@@ -14,7 +13,6 @@ import androidx.compose.foundation.layout.Stack
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.preferredSize
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
@@ -47,7 +45,9 @@ import com.example.yocipe.ui.Screen
 import com.example.yocipe.ui.SwipeToRefreshLayout
 import com.example.yocipe.ui.home.RecipeCardSimple
 import com.example.yocipe.ui.state.UiState
+import com.example.yocipe.ui.theme.dimen8
 import com.example.yocipe.ui.theme.snackbarAction
+import com.example.yocipe.ui.utils.FullScreen
 import com.example.yocipe.utils.launchUiStateProducer
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -66,7 +66,7 @@ fun FavoriteScreen(
 
     val coroutineScope = rememberCoroutineScope()
 
-    HomeScreen(
+    FavoriteScreen(
         recipes = recipeUiState.value,
         favorites = favorites,
         onToggleFavorite = {
@@ -80,7 +80,7 @@ fun FavoriteScreen(
 }
 
 @Composable
-fun HomeScreen(
+private fun FavoriteScreen(
     recipes: UiState<List<Recipe>>,
     favorites: Set<String>,
     onToggleFavorite: (String) -> Unit,
@@ -177,7 +177,9 @@ private fun HomeScreenErrorAndContent(
             if (favoriteRecipes.isNotEmpty()) {
                 FavoriteRecipeList(favoriteRecipes, navigateTo, favorites, onToggleFavorite)
             } else {
-                stringResource(id = R.string.empty_favorite_message).FullScreenMessage()
+                FullScreenMessage {
+                    navigateTo(Screen.Home)
+                }
             }
         } else if (!recipes.hasError) {
             TextButton(onClick = onRefresh, Modifier.fillMaxSize()) {
@@ -227,7 +229,7 @@ private fun ErrorSnackbar(
     ) {
         Snackbar(
             modifier = Modifier.padding(16.dp),
-            text = { Text("Can't update latest news") },
+            text = { Text("Can't update recipes") },
             action = {
                 TextButton(
                     onClick = {
@@ -274,14 +276,31 @@ private fun FullScreenLoading() {
 }
 
 @Composable
-private fun FullScreen(action: @Composable () -> Unit) {
-    Box(modifier = Modifier.fillMaxSize().wrapContentSize(Alignment.Center)) {
-        action()
+fun FullScreenMessage(
+    mainMessage: String? = null,
+    instructionMessage: String? = null,
+    textButtonMessage: String? = null,
+    textButtonAction: () -> Unit
+) = FullScreen {
+    Column {
+        val textStyle = MaterialTheme.typography.body2
+        Text(
+            text = "You don't have any favorite recipes yet.",
+            style = textStyle
+        )
+        Text(
+            text = "Start by adding some.",
+            style = textStyle,
+            modifier = Modifier.padding(top = dimen8)
+        )
+        TextButton(
+            onClick = { textButtonAction() },
+            modifier = Modifier.padding(top = dimen8)
+        ) {
+            Text(
+                text = "Go back to main screen",
+                style = textStyle
+            )
+        }
     }
 }
-
-@Composable
-fun String.FullScreenMessage() =
-    Box(modifier = Modifier.fillMaxSize().wrapContentSize(Alignment.Center)) {
-        Text(text = this)
-    }

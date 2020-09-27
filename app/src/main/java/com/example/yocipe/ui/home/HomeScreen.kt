@@ -264,7 +264,7 @@ private fun ErrorSnackbar(
     ) {
         Snackbar(
             modifier = Modifier.padding(16.dp),
-            text = { Text("Can't update latest news") },
+            text = { Text("Can't update recipes") },
             action = {
                 TextButton(
                     onClick = {
