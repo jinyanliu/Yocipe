@@ -30,8 +30,7 @@ import com.example.yocipe.ui.Screen
 fun RecipeCardSimple(
     recipe: Recipe,
     navigateTo: (Screen) -> Unit,
-    isFavorite: Boolean,
-    onToggleFavorite: () -> Unit
+    isFavorite: Boolean
 ) {
     Row(
         modifier = Modifier.clickable(onClick = { navigateTo(Screen.Recipe(recipe.id)) })
@@ -42,10 +41,6 @@ fun RecipeCardSimple(
             RecipeTitle(recipe)
             FirstInstruction(recipe)
         }
-        FavoriteButton(
-            isFavorite = isFavorite,
-            onClick = onToggleFavorite
-        )
     }
 }
 
@@ -77,30 +72,5 @@ fun FirstInstruction(
             text = recipe.instructions[0],
             style = MaterialTheme.typography.body2
         )
-    }
-}
-
-@Composable
-fun FavoriteButton(
-    isFavorite: Boolean,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    IconToggleButton(
-        checked = isFavorite,
-        onCheckedChange = { onClick() }
-    ) {
-        modifier.fillMaxSize()
-        if (isFavorite) {
-            Icon(
-                asset = Icons.Filled.Bookmark,
-                modifier = modifier
-            )
-        } else {
-            Icon(
-                asset = Icons.Filled.BookmarkBorder,
-                modifier = modifier
-            )
-        }
     }
 }

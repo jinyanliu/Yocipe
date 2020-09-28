@@ -46,7 +46,6 @@ import com.example.yocipe.ui.SwipeToRefreshLayout
 import com.example.yocipe.ui.home.RecipeCardSimple
 import com.example.yocipe.ui.state.UiState
 import com.example.yocipe.ui.theme.snackbarAction
-import com.example.yocipe.ui.utils.FullScreen
 import com.example.yocipe.ui.utils.FullScreenLoading
 import com.example.yocipe.ui.utils.FullScreenMessage
 import com.example.yocipe.utils.launchUiStateProducer
@@ -70,9 +69,6 @@ fun FavoriteScreen(
     FavoriteScreen(
         recipes = recipeUiState.value,
         favorites = favorites,
-        onToggleFavorite = {
-            coroutineScope.launch { recipesRepository.toggleFavorite(it) }
-        },
         onRefreshRecipes = refreshRecipe,
         onErrorDismiss = clearError,
         navigateTo = navigateTo,
@@ -84,7 +80,6 @@ fun FavoriteScreen(
 private fun FavoriteScreen(
     recipes: UiState<List<Recipe>>,
     favorites: Set<String>,
-    onToggleFavorite: (String) -> Unit,
     onRefreshRecipes: () -> Unit,
     onErrorDismiss: () -> Unit,
     navigateTo: (Screen) -> Unit,
@@ -127,7 +122,6 @@ private fun FavoriteScreen(
                         onErrorDismiss = onErrorDismiss,
                         navigateTo = navigateTo,
                         favorites = favorites,
-                        onToggleFavorite = onToggleFavorite,
                         modifier = modifier
                     )
                 }
@@ -169,14 +163,13 @@ private fun HomeScreenErrorAndContent(
     onErrorDismiss: () -> Unit,
     navigateTo: (Screen) -> Unit,
     favorites: Set<String>,
-    onToggleFavorite: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Stack(modifier = modifier.fillMaxSize()) {
         if (recipes.data != null) {
             val favoriteRecipes = recipes.data.filter { favorites.contains(it.id) }
             if (favoriteRecipes.isNotEmpty()) {
-                FavoriteRecipeList(favoriteRecipes, navigateTo, favorites, onToggleFavorite)
+                FavoriteRecipeList(favoriteRecipes, navigateTo, favorites)
             } else {
                 FullScreenMessage(
                     mainMessage = stringResource(id = R.string.empty_favorite_main_message),
@@ -257,8 +250,7 @@ private fun ErrorSnackbar(
 private fun FavoriteRecipeList(
     favoriteRecipes: List<Recipe>,
     navigateTo: (Screen) -> Unit,
-    favorites: Set<String>,
-    onToggleFavorite: (String) -> Unit
+    favorites: Set<String>
 ) {
     ScrollableColumn {
         Column {
@@ -266,8 +258,7 @@ private fun FavoriteRecipeList(
                 RecipeCardSimple(
                     recipe = recipe,
                     navigateTo = navigateTo,
-                    isFavorite = favorites.contains(recipe.id),
-                    onToggleFavorite = { onToggleFavorite(recipe.id) }
+                    isFavorite = favorites.contains(recipe.id)
                 )
                 RecipeListDivider()
             }

@@ -1,11 +1,9 @@
 package com.example.yocipe.ui.recipe
 
 import androidx.compose.foundation.Icon
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.material.AlertDialog
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -13,13 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.savedinstancestate.savedInstanceState
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.yocipe.data.recipes.RecipesRepository
 import com.example.yocipe.model.Recipe
-import com.example.yocipe.ui.home.FavoriteButton
+import com.example.yocipe.ui.utils.FavoriteButton
 import com.example.yocipe.utils.launchUiStateProducer
 import kotlinx.coroutines.launch
 

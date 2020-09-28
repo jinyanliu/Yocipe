@@ -67,14 +67,9 @@ fun HomeScreen(
 
     val favorites by recipesRepository.observeFavorites().collectAsState(setOf())
 
-    val coroutineScope = rememberCoroutineScope()
-
     HomeScreen(
         recipes = recipeUiState.value,
         favorites = favorites,
-        onToggleFavorite = {
-            coroutineScope.launch { recipesRepository.toggleFavorite(it) }
-        },
         onRefreshRecipes = refreshRecipe,
         onErrorDismiss = clearError,
         navigateTo = navigateTo,
@@ -86,7 +81,6 @@ fun HomeScreen(
 fun HomeScreen(
     recipes: UiState<List<Recipe>>,
     favorites: Set<String>,
-    onToggleFavorite: (String) -> Unit,
     onRefreshRecipes: () -> Unit,
     onErrorDismiss: () -> Unit,
     navigateTo: (Screen) -> Unit,
@@ -129,7 +123,6 @@ fun HomeScreen(
                         onErrorDismiss = onErrorDismiss,
                         navigateTo = navigateTo,
                         favorites = favorites,
-                        onToggleFavorite = onToggleFavorite,
                         modifier = modifier
                     )
                 }
@@ -171,12 +164,11 @@ private fun HomeScreenErrorAndContent(
     onErrorDismiss: () -> Unit,
     navigateTo: (Screen) -> Unit,
     favorites: Set<String>,
-    onToggleFavorite: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Stack(modifier = modifier.fillMaxSize()) {
         if (recipes.data != null) {
-            RecipeList(recipes.data, navigateTo, favorites, onToggleFavorite)
+            RecipeList(recipes.data, navigateTo, favorites)
         } else if (!recipes.hasError) {
             TextButton(onClick = onRefresh, Modifier.fillMaxSize()) {
                 Text(
@@ -199,7 +191,6 @@ private fun RecipeList(
     recipes: List<Recipe>,
     navigateTo: (Screen) -> Unit,
     favorites: Set<String>,
-    onToggleFavorites: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val recipeTop = recipes[0]
@@ -207,7 +198,7 @@ private fun RecipeList(
 
     ScrollableColumn(modifier) {
         RecipeListTopSection(recipeTop, navigateTo)
-        RecipesListSimpleSection(recipesSimple, navigateTo, favorites, onToggleFavorites)
+        RecipesListSimpleSection(recipesSimple, navigateTo, favorites)
     }
 }
 
@@ -281,16 +272,14 @@ private fun ErrorSnackbar(
 private fun RecipesListSimpleSection(
     recipes: List<Recipe>,
     navigateTo: (Screen) -> Unit,
-    favorites: Set<String>,
-    onToggleFavorite: (String) -> Unit
+    favorites: Set<String>
 ) {
     Column {
         recipes.forEach { recipe ->
             RecipeCardSimple(
                 recipe = recipe,
                 navigateTo = navigateTo,
-                isFavorite = favorites.contains(recipe.id),
-                onToggleFavorite = { onToggleFavorite(recipe.id) }
+                isFavorite = favorites.contains(recipe.id)
             )
             RecipeListDivider()
         }
