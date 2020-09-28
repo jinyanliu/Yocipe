@@ -8,14 +8,12 @@ import androidx.compose.foundation.Icon
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.contentColor
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Stack
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.preferredSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Divider
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -31,7 +29,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.launchInComposition
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -43,14 +40,13 @@ import com.example.yocipe.model.Recipe
 import com.example.yocipe.ui.AppDrawer
 import com.example.yocipe.ui.Screen
 import com.example.yocipe.ui.SwipeToRefreshLayout
-import com.example.yocipe.ui.home.RecipeCardSimple
+import com.example.yocipe.ui.components.RecipeCardList
 import com.example.yocipe.ui.state.UiState
 import com.example.yocipe.ui.theme.snackbarAction
 import com.example.yocipe.ui.utils.FullScreenLoading
 import com.example.yocipe.ui.utils.FullScreenMessage
 import com.example.yocipe.utils.launchUiStateProducer
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @Composable
 fun FavoriteScreen(
@@ -63,8 +59,6 @@ fun FavoriteScreen(
     }
 
     val favorites by recipesRepository.observeFavorites().collectAsState(setOf())
-
-    val coroutineScope = rememberCoroutineScope()
 
     FavoriteScreen(
         recipes = recipeUiState.value,
@@ -114,7 +108,7 @@ private fun FavoriteScreen(
                 loading = recipes.loading,
                 onRefresh = onRefreshRecipes,
                 content = {
-                    HomeScreenErrorAndContent(
+                    FavoriteScreenErrorAndContent(
                         recipes = recipes,
                         onRefresh = {
                             onRefreshRecipes()
@@ -157,7 +151,7 @@ private fun LoadingContent(
 }
 
 @Composable
-private fun HomeScreenErrorAndContent(
+private fun FavoriteScreenErrorAndContent(
     recipes: UiState<List<Recipe>>,
     onRefresh: () -> Unit,
     onErrorDismiss: () -> Unit,
@@ -169,7 +163,9 @@ private fun HomeScreenErrorAndContent(
         if (recipes.data != null) {
             val favoriteRecipes = recipes.data.filter { favorites.contains(it.id) }
             if (favoriteRecipes.isNotEmpty()) {
-                FavoriteRecipeList(favoriteRecipes, navigateTo, favorites)
+                ScrollableColumn {
+                    RecipeCardList(favoriteRecipes, navigateTo)
+                }
             } else {
                 FullScreenMessage(
                     mainMessage = stringResource(id = R.string.empty_favorite_main_message),
@@ -194,14 +190,6 @@ private fun HomeScreenErrorAndContent(
             modifier = Modifier.gravity(Alignment.BottomCenter)
         )
     }
-}
-
-@Composable
-private fun RecipeListDivider() {
-    Divider(
-        modifier = Modifier.padding(horizontal = 14.dp),
-        color = MaterialTheme.colors.onSurface.copy(alpha = 0.08f)
-    )
 }
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -243,25 +231,5 @@ private fun ErrorSnackbar(
                 }
             }
         )
-    }
-}
-
-@Composable
-private fun FavoriteRecipeList(
-    favoriteRecipes: List<Recipe>,
-    navigateTo: (Screen) -> Unit,
-    favorites: Set<String>
-) {
-    ScrollableColumn {
-        Column {
-            favoriteRecipes.forEach { recipe ->
-                RecipeCardSimple(
-                    recipe = recipe,
-                    navigateTo = navigateTo,
-                    isFavorite = favorites.contains(recipe.id)
-                )
-                RecipeListDivider()
-            }
-        }
     }
 }

@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.preferredHeight
 import androidx.compose.foundation.layout.preferredHeightIn
 import androidx.compose.foundation.layout.preferredWidth
-import androidx.compose.material.Divider
 import androidx.compose.material.EmphasisAmbient
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ProvideEmphasis
@@ -30,7 +29,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.yocipe.R
 import com.example.yocipe.model.Recipe
+import com.example.yocipe.ui.theme.dimen0
 import com.example.yocipe.ui.theme.dimen16
+import com.example.yocipe.ui.utils.Divider
 
 @Composable
 fun RecipeContent(
@@ -133,7 +134,7 @@ private fun IngredientsList(recipe: Recipe, modifier: Modifier) {
                 ratio = ratio,
                 modifier = Modifier.padding(top = 4.dp, bottom = 4.dp)
             )
-            RecipeContentListDivider()
+            Divider(Modifier.padding(horizontal = dimen0))
         }
     }
 }
@@ -166,13 +167,6 @@ private fun SingleIngredient(
 }
 
 @Composable
-private fun RecipeContentListDivider() {
-    Divider(
-        color = MaterialTheme.colors.onSurface.copy(alpha = 0.08f)
-    )
-}
-
-@Composable
 private fun InstructionsList(recipe: Recipe, modifier: Modifier) {
     Column(modifier = modifier) {
         Text(
@@ -185,7 +179,7 @@ private fun InstructionsList(recipe: Recipe, modifier: Modifier) {
                 instruction = instruction,
                 modifier = Modifier.padding(top = 4.dp, bottom = 4.dp)
             )
-            RecipeContentListDivider()
+            Divider(Modifier.padding(horizontal = dimen0))
         }
     }
 }

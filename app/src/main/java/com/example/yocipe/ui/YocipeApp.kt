@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.preferredHeight
 import androidx.compose.foundation.layout.preferredWidth
-import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.TextButton
@@ -35,6 +34,8 @@ import com.example.yocipe.ui.favorites.FavoriteScreen
 import com.example.yocipe.ui.home.HomeScreen
 import com.example.yocipe.ui.recipe.RecipeScreen
 import com.example.yocipe.ui.theme.YocipeTheme
+import com.example.yocipe.ui.theme.dimen8
+import com.example.yocipe.ui.utils.Divider
 
 @Composable
 fun YocipeApp(
@@ -84,7 +85,7 @@ fun AppDrawer(
     Column(modifier = Modifier.fillMaxSize()) {
         Spacer(Modifier.preferredHeight(24.dp))
         YocipeLogo(Modifier.padding(16.dp))
-        Divider(color = MaterialTheme.colors.onSurface.copy(alpha = .2f))
+        Divider(Modifier.padding(horizontal = dimen8))
         DrawerButton(
             icon = Icons.Filled.Home,
             label = stringResource(R.string.home),

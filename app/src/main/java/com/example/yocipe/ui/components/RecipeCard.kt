@@ -1,42 +1,47 @@
-package com.example.yocipe.ui.home
+package com.example.yocipe.ui.components
 
-import androidx.compose.foundation.Icon
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.preferredSize
 import androidx.compose.material.EmphasisAmbient
-import androidx.compose.material.IconToggleButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ProvideEmphasis
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Bookmark
-import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
-import androidx.compose.ui.unit.dp
 import com.example.yocipe.R
 import com.example.yocipe.model.Recipe
 import com.example.yocipe.ui.Screen
+import com.example.yocipe.ui.theme.dimen16
+import com.example.yocipe.ui.theme.dimen40
 
 @Composable
-fun RecipeCardSimple(
+fun RecipeCard(
     recipe: Recipe,
-    navigateTo: (Screen) -> Unit,
-    isFavorite: Boolean
+    navigateTo: (Screen) -> Unit
 ) {
     Row(
-        modifier = Modifier.clickable(onClick = { navigateTo(Screen.Recipe(recipe.id)) })
-            .padding(16.dp)
+        modifier = Modifier.clickable(onClick = {
+            navigateTo(
+                Screen.Recipe(
+                    recipe.id
+                )
+            )
+        })
+            .padding(dimen16),
+        verticalGravity = Alignment.CenterVertically
     ) {
-        RecipeImage(recipe, Modifier.padding(end = 16.dp))
+        RecipeImage(
+            recipe,
+            Modifier.padding(end = dimen16)
+        )
         Column(modifier = Modifier.weight(1f)) {
             RecipeTitle(recipe)
             FirstInstruction(recipe)
@@ -50,7 +55,7 @@ fun RecipeImage(recipe: Recipe, modifier: Modifier = Modifier) {
     Image(
         asset = image,
         modifier = modifier
-            .preferredSize(40.dp, 40.dp)
+            .preferredSize(dimen40, dimen40)
             .clip(MaterialTheme.shapes.small),
         contentScale = ContentScale.Crop
     )
@@ -64,9 +69,7 @@ fun RecipeTitle(recipe: Recipe) {
 }
 
 @Composable
-fun FirstInstruction(
-    recipe: Recipe
-) {
+fun FirstInstruction(recipe: Recipe) {
     ProvideEmphasis(emphasis = EmphasisAmbient.current.medium) {
         Text(
             text = recipe.instructions[0],

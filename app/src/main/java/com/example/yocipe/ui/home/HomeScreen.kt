@@ -4,21 +4,17 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.Box
 import androidx.compose.foundation.Icon
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.contentColor
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Stack
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.preferredSize
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Divider
 import androidx.compose.material.EmphasisAmbient
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -33,10 +29,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.RestaurantMenu
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.launchInComposition
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -48,12 +41,13 @@ import com.example.yocipe.model.Recipe
 import com.example.yocipe.ui.AppDrawer
 import com.example.yocipe.ui.Screen
 import com.example.yocipe.ui.SwipeToRefreshLayout
+import com.example.yocipe.ui.components.RecipeCardList
 import com.example.yocipe.ui.state.UiState
 import com.example.yocipe.ui.theme.snackbarAction
 import com.example.yocipe.ui.utils.FullScreenLoading
+import com.example.yocipe.ui.utils.Divider
 import com.example.yocipe.utils.launchUiStateProducer
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
@@ -65,11 +59,8 @@ fun HomeScreen(
         getRecipes()
     }
 
-    val favorites by recipesRepository.observeFavorites().collectAsState(setOf())
-
     HomeScreen(
         recipes = recipeUiState.value,
-        favorites = favorites,
         onRefreshRecipes = refreshRecipe,
         onErrorDismiss = clearError,
         navigateTo = navigateTo,
@@ -80,7 +71,6 @@ fun HomeScreen(
 @Composable
 fun HomeScreen(
     recipes: UiState<List<Recipe>>,
-    favorites: Set<String>,
     onRefreshRecipes: () -> Unit,
     onErrorDismiss: () -> Unit,
     navigateTo: (Screen) -> Unit,
@@ -122,7 +112,6 @@ fun HomeScreen(
                         },
                         onErrorDismiss = onErrorDismiss,
                         navigateTo = navigateTo,
-                        favorites = favorites,
                         modifier = modifier
                     )
                 }
@@ -163,12 +152,11 @@ private fun HomeScreenErrorAndContent(
     onRefresh: () -> Unit,
     onErrorDismiss: () -> Unit,
     navigateTo: (Screen) -> Unit,
-    favorites: Set<String>,
     modifier: Modifier = Modifier
 ) {
     Stack(modifier = modifier.fillMaxSize()) {
         if (recipes.data != null) {
-            RecipeList(recipes.data, navigateTo, favorites)
+            RecipeList(recipes.data, navigateTo)
         } else if (!recipes.hasError) {
             TextButton(onClick = onRefresh, Modifier.fillMaxSize()) {
                 Text(
@@ -190,7 +178,6 @@ private fun HomeScreenErrorAndContent(
 private fun RecipeList(
     recipes: List<Recipe>,
     navigateTo: (Screen) -> Unit,
-    favorites: Set<String>,
     modifier: Modifier = Modifier
 ) {
     val recipeTop = recipes[0]
@@ -198,7 +185,7 @@ private fun RecipeList(
 
     ScrollableColumn(modifier) {
         RecipeListTopSection(recipeTop, navigateTo)
-        RecipesListSimpleSection(recipesSimple, navigateTo, favorites)
+        RecipeCardList(recipesSimple, navigateTo)
     }
 }
 
@@ -215,15 +202,7 @@ private fun RecipeListTopSection(recipe: Recipe, navigateTo: (Screen) -> Unit) {
         recipe = recipe,
         modifier = Modifier.clickable(onClick = { navigateTo(Screen.Recipe(recipe.id)) })
     )
-    RecipeListDivider()
-}
-
-@Composable
-private fun RecipeListDivider() {
-    Divider(
-        modifier = Modifier.padding(horizontal = 14.dp),
-        color = MaterialTheme.colors.onSurface.copy(alpha = 0.08f)
-    )
+    Divider()
 }
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -265,24 +244,6 @@ private fun ErrorSnackbar(
                 }
             }
         )
-    }
-}
-
-@Composable
-private fun RecipesListSimpleSection(
-    recipes: List<Recipe>,
-    navigateTo: (Screen) -> Unit,
-    favorites: Set<String>
-) {
-    Column {
-        recipes.forEach { recipe ->
-            RecipeCardSimple(
-                recipe = recipe,
-                navigateTo = navigateTo,
-                isFavorite = favorites.contains(recipe.id)
-            )
-            RecipeListDivider()
-        }
     }
 }
 
