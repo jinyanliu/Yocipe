@@ -1,26 +1,14 @@
 package com.example.yocipe.ui.favorites
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Icon
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.Text
-import androidx.compose.foundation.contentColor
 import androidx.compose.foundation.layout.Stack
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.preferredSize
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
-import androidx.compose.material.Snackbar
-import androidx.compose.material.Surface
-import androidx.compose.material.TextButton
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.RestaurantMenu
@@ -28,25 +16,22 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.launchInComposition
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import com.example.yocipe.R
 import com.example.yocipe.data.recipes.RecipesRepository
 import com.example.yocipe.model.Recipe
 import com.example.yocipe.ui.AppDrawer
 import com.example.yocipe.ui.Screen
-import com.example.yocipe.ui.SwipeToRefreshLayout
 import com.example.yocipe.ui.components.RecipeCardList
 import com.example.yocipe.ui.state.UiState
-import com.example.yocipe.ui.theme.snackbarAction
 import com.example.yocipe.ui.utils.FullScreenLoading
 import com.example.yocipe.ui.utils.FullScreenMessage
+import com.example.yocipe.ui.utils.FullScreenTextButton
+import com.example.yocipe.ui.utils.LoadingContent
+import com.example.yocipe.utils.ErrorSnackbar
 import com.example.yocipe.utils.launchUiStateProducer
-import kotlinx.coroutines.delay
 
 @Composable
 fun FavoriteScreen(
@@ -92,7 +77,7 @@ private fun FavoriteScreen(
         },
         topBar = {
             TopAppBar(
-                title = { Text(text = stringResource(id = R.string.favorite)) },
+                title = { Text(text = stringResource(id = R.string.screen_favorite)) },
                 navigationIcon = {
                     IconButton(onClick = { scaffoldState.drawerState.open() }) {
                         Icon(Icons.Rounded.RestaurantMenu)
@@ -125,32 +110,6 @@ private fun FavoriteScreen(
 }
 
 @Composable
-private fun LoadingContent(
-    empty: Boolean,
-    emptyContent: @Composable () -> Unit,
-    loading: Boolean,
-    onRefresh: () -> Unit,
-    content: @Composable () -> Unit
-) {
-    if (empty) {
-        emptyContent()
-    } else {
-        SwipeToRefreshLayout(
-            refreshingState = loading,
-            onRefresh = onRefresh,
-            refreshIndicator = {
-                Surface(elevation = 10.dp, shape = CircleShape) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.preferredSize(36.dp).padding(4.dp)
-                    )
-                }
-            },
-            content = content
-        )
-    }
-}
-
-@Composable
 private fun FavoriteScreenErrorAndContent(
     recipes: UiState<List<Recipe>>,
     onRefresh: () -> Unit,
@@ -163,9 +122,7 @@ private fun FavoriteScreenErrorAndContent(
         if (recipes.data != null) {
             val favoriteRecipes = recipes.data.filter { favorites.contains(it.id) }
             if (favoriteRecipes.isNotEmpty()) {
-                ScrollableColumn {
-                    RecipeCardList(favoriteRecipes, navigateTo)
-                }
+                FavoriteScreenContent(favoriteRecipes, navigateTo)
             } else {
                 FullScreenMessage(
                     mainMessage = stringResource(id = R.string.empty_favorite_main_message),
@@ -176,12 +133,7 @@ private fun FavoriteScreenErrorAndContent(
                 }
             }
         } else if (!recipes.hasError) {
-            TextButton(onClick = onRefresh, Modifier.fillMaxSize()) {
-                Text(
-                    text = stringResource(id = R.string.tap_to_load_content),
-                    textAlign = TextAlign.Center
-                )
-            }
+            FullScreenTextButton(stringResource(id = R.string.tap_to_load_content), onRefresh)
         }
         ErrorSnackbar(
             showError = recipes.hasError,
@@ -192,44 +144,12 @@ private fun FavoriteScreenErrorAndContent(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
-private fun ErrorSnackbar(
-    showError: Boolean,
-    modifier: Modifier = Modifier,
-    onErrorAction: () -> Unit = {},
-    onDismiss: () -> Unit = {}
+private fun FavoriteScreenContent(
+    favoriteRecipes: List<Recipe>,
+    navigateTo: (Screen) -> Unit
 ) {
-    launchInComposition(showError) {
-        delay(timeMillis = 5000L)
-        if (showError) {
-            onDismiss()
-        }
-    }
-
-    AnimatedVisibility(
-        visible = showError,
-        enter = slideInVertically(initialOffsetY = { it }),
-        exit = slideOutVertically(targetOffsetY = { it }),
-        modifier = modifier
-    ) {
-        Snackbar(
-            modifier = Modifier.padding(16.dp),
-            text = { Text("Can't update recipes") },
-            action = {
-                TextButton(
-                    onClick = {
-                        onErrorAction()
-                        onDismiss()
-                    },
-                    contentColor = contentColor()
-                ) {
-                    Text(
-                        text = "RETRY",
-                        color = MaterialTheme.colors.snackbarAction
-                    )
-                }
-            }
-        )
+    ScrollableColumn {
+        RecipeCardList(favoriteRecipes, navigateTo)
     }
 }

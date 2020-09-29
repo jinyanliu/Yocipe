@@ -88,7 +88,7 @@ fun AppDrawer(
         Divider(Modifier.padding(horizontal = dimen8))
         DrawerButton(
             icon = Icons.Filled.Home,
-            label = stringResource(R.string.home),
+            label = stringResource(R.string.screen_home),
             isSelected = currentScreen == Screen.Home,
             action = {
                 navigateTo(Screen.Home)
@@ -97,7 +97,7 @@ fun AppDrawer(
         )
         DrawerButton(
             icon = Icons.Rounded.Favorite,
-            label = stringResource(R.string.favorite),
+            label = stringResource(R.string.screen_favorite),
             isSelected = currentScreen == Screen.Favorite,
             action = {
                 navigateTo(Screen.Favorite)

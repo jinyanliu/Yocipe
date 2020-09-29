@@ -55,7 +55,6 @@ private fun RecipeHeaderImage(recipe: Recipe) {
         val imageModifier = Modifier
             .preferredHeightIn(minHeight = 180.dp, maxHeight = 220.dp)
             .fillMaxWidth()
-            .clip(shape = MaterialTheme.shapes.medium)
         Image(asset = image, imageModifier, contentScale = ContentScale.Crop)
         Spacer(modifier = Modifier.preferredHeight(dimen16))
     }

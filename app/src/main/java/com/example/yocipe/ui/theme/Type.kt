@@ -1,6 +1,8 @@
 package com.example.yocipe.ui.theme
 
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Typography
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.font
@@ -72,3 +74,15 @@ val YocipeTypography = Typography(
         fontSize = 12.sp
     )
 )
+
+@Composable
+private fun typography() = MaterialTheme.typography
+
+@Composable
+fun typographyH6() = typography().h6
+
+@Composable
+fun typographyBody2() = typography().body2
+
+@Composable
+fun typographySubtitle1() = typography().subtitle1

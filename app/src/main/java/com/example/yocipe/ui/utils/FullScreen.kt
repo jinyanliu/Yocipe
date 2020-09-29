@@ -16,20 +16,24 @@ import com.example.yocipe.ui.theme.dimen16
 import com.example.yocipe.ui.theme.dimen8
 
 @Composable
-fun FullScreen(action: @Composable () -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .wrapContentSize(Alignment.Center)
-            .padding(dimen16)
-    ) {
-        action()
-    }
+fun FullScreen(action: @Composable () -> Unit) = Box(
+    modifier = Modifier
+        .fillMaxSize()
+        .wrapContentSize(Alignment.Center)
+        .padding(dimen16)
+) {
+    action()
 }
 
+
 @Composable
-fun FullScreenLoading() {
-    FullScreen { CircularProgressIndicator() }
+fun FullScreenLoading() = FullScreen { CircularProgressIndicator() }
+
+@Composable
+fun FullScreenTextButton(textButtonMessage: String, textButtonAction: () -> Unit) = FullScreen {
+    TextButton(onClick = textButtonAction) {
+        Text(text = textButtonMessage)
+    }
 }
 
 @Composable
