@@ -22,11 +22,11 @@ import com.example.yocipe.ui.theme.EmphasisAmbientMedium
 import com.example.yocipe.ui.theme.dimen16
 import com.example.yocipe.ui.theme.dimen180
 import com.example.yocipe.ui.theme.dimen220
-import com.example.yocipe.ui.theme.typographyBody2
-import com.example.yocipe.ui.theme.typographyH6
-import com.example.yocipe.ui.theme.typographySubtitle1
+import com.example.yocipe.ui.theme.TypographyBody2
+import com.example.yocipe.ui.theme.TypographyH6
+import com.example.yocipe.ui.theme.TypographySubtitle1
 import com.example.yocipe.ui.utils.Divider
-import com.example.yocipe.ui.utils.VerticalSpacer16
+import com.example.yocipe.ui.utils.Spacer16Vertical
 import com.example.yocipe.utils.yocipeToUppercase
 
 @Composable
@@ -35,7 +35,7 @@ fun RecipeCardHighlightSection(recipe: Recipe, navigateTo: (Screen) -> Unit) {
         Text(
             modifier = Modifier.padding(start = dimen16, top = dimen16, end = dimen16),
             text = "Top recipes for you",
-            style = typographySubtitle1()
+            style = TypographySubtitle1()
         )
     }
     RecipeCardHighlight(
@@ -55,21 +55,21 @@ private fun RecipeCardHighlight(recipe: Recipe, modifier: Modifier = Modifier) {
                 .clip(shape = MaterialTheme.shapes.medium)
             Image(image, modifier = imageModifier, contentScale = ContentScale.Crop)
         }
-        VerticalSpacer16()
+        Spacer16Vertical()
         ProvideEmphasis(EmphasisAmbientHigh()) {
             Text(
                 text = recipe.name,
-                style = typographyH6()
+                style = TypographyH6()
             )
             Text(
                 text = recipe.instructions[0],
-                style = typographyBody2()
+                style = TypographyBody2()
             )
         }
         ProvideEmphasis(EmphasisAmbientMedium()) {
             Text(
                 text = stringResource(id = R.string.read_more).yocipeToUppercase(),
-                style = typographyBody2()
+                style = TypographyBody2()
             )
         }
     }

@@ -10,6 +10,7 @@ val dimen16 = 16.dp
 val dimen24 = 24.dp
 val dimen36 = 36.dp
 val dimen40 = 40.dp
+val dimen52 = 52.dp
 val dimen180 = 180.dp
 val dimen220 = 220.dp
 

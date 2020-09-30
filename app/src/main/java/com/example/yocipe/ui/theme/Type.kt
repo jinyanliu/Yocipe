@@ -76,13 +76,16 @@ val YocipeTypography = Typography(
 )
 
 @Composable
-private fun typography() = MaterialTheme.typography
+fun TypographyH4() = MaterialTheme.typography.h4
 
 @Composable
-fun typographyH6() = typography().h6
+fun TypographyH6() = MaterialTheme.typography.h6
 
 @Composable
-fun typographyBody2() = typography().body2
+fun TypographyBody2() = MaterialTheme.typography.body2
 
 @Composable
-fun typographySubtitle1() = typography().subtitle1
+fun TypographySubtitle1() = MaterialTheme.typography.subtitle1
+
+@Composable
+fun TypographyButton() = MaterialTheme.typography.button

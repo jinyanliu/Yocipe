@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Yocipe" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.Yocipe" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/orange700</item>
         <item name="colorPrimaryDark">@color/orange900</item>
         <item name="colorAccent">@color/orange700</item>

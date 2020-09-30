@@ -1,5 +1,6 @@
 package com.example.yocipe.ui.utils
 
+import androidx.compose.foundation.layout.RowScope.weight
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.preferredHeight
 import androidx.compose.foundation.layout.preferredWidth
@@ -9,13 +10,16 @@ import com.example.yocipe.ui.theme.dimen16
 import com.example.yocipe.ui.theme.dimen8
 
 @Composable
-fun VerticalSpacer16() = Spacer(Modifier.preferredHeight(dimen16))
+fun Spacer16Vertical() = Spacer(Modifier.preferredHeight(dimen16))
 
 @Composable
-fun VerticalSpacer8() = Spacer(Modifier.preferredHeight(dimen8))
+fun Spacer8Vertical() = Spacer(Modifier.preferredHeight(dimen8))
 
 @Composable
-fun HorizontalSpacer16() = Spacer(Modifier.preferredWidth(dimen16))
+fun Spacer16Horizontal() = Spacer(Modifier.preferredWidth(dimen16))
 
 @Composable
-fun HorizontalSpacer8() = Spacer(Modifier.preferredWidth(dimen8))
+fun Spacer8Horizontal() = Spacer(Modifier.preferredWidth(dimen8))
+
+@Composable
+fun SpacerFillMax()=  Spacer(modifier = Modifier.weight(1f))

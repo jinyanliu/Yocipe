@@ -3,7 +3,7 @@ package com.example.yocipe.ui.recipe
 import androidx.compose.foundation.Icon
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import com.example.yocipe.data.recipes.RecipesRepository
 import com.example.yocipe.model.Recipe
 import com.example.yocipe.ui.utils.FavoriteButton
+import com.example.yocipe.ui.utils.SpacerFillMax
 import com.example.yocipe.utils.launchUiStateProducer
 import kotlinx.coroutines.launch
 
@@ -53,15 +54,12 @@ fun RecipeScreen(
     isFavorite: Boolean,
     onToggleFavorite: () -> Unit
 ) {
-    Column {
-        Row {
-            IconButton(
-                onClick = onBack,
-                modifier = Modifier.gravity(Alignment.CenterVertically)
-            ) {
-                Icon(Icons.Filled.ArrowBack)
-            }
-            Spacer(modifier = Modifier.weight(1f))
+    Column(modifier = Modifier.fillMaxSize()) {
+        Row(
+            verticalGravity = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = onBack) { Icon(Icons.Filled.ArrowBack) }
+            SpacerFillMax()
             FavoriteButton(isFavorite = isFavorite, onClick = onToggleFavorite)
         }
         RecipeContent(recipe)

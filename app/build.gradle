@@ -77,5 +77,5 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation "androidx.ui:ui-test:$compose_version"
 
-
+    implementation 'com.google.android.material:material:1.2.1'
 }

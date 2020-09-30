@@ -17,19 +17,14 @@ fun FavoriteButton(
 ) {
     IconToggleButton(
         checked = isFavorite,
-        onCheckedChange = { onClick() }
+        onCheckedChange = { onClick() },
+        modifier = modifier
     ) {
         modifier.fillMaxSize()
         if (isFavorite) {
-            Icon(
-                asset = Icons.Filled.Favorite,
-                modifier = modifier
-            )
+            Icon(asset = Icons.Filled.Favorite)
         } else {
-            Icon(
-                asset = Icons.Filled.FavoriteBorder,
-                modifier = modifier
-            )
+            Icon(asset = Icons.Filled.FavoriteBorder)
         }
     }
 }

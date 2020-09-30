@@ -8,13 +8,10 @@ import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.preferredHeight
 import androidx.compose.foundation.layout.preferredHeightIn
 import androidx.compose.foundation.layout.preferredWidth
-import androidx.compose.material.EmphasisAmbient
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ProvideEmphasis
@@ -34,11 +31,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.yocipe.R
 import com.example.yocipe.model.Recipe
+import com.example.yocipe.ui.theme.EmphasisAmbientMedium
+import com.example.yocipe.ui.theme.TypographyBody2
+import com.example.yocipe.ui.theme.TypographyButton
+import com.example.yocipe.ui.theme.TypographyH4
+import com.example.yocipe.ui.theme.TypographyH6
+import com.example.yocipe.ui.theme.TypographySubtitle1
 import com.example.yocipe.ui.theme.dimen0
 import com.example.yocipe.ui.theme.dimen16
+import com.example.yocipe.ui.theme.dimen180
+import com.example.yocipe.ui.theme.dimen220
+import com.example.yocipe.ui.theme.dimen4
+import com.example.yocipe.ui.theme.dimen52
 import com.example.yocipe.ui.utils.Divider
-import com.example.yocipe.ui.utils.HorizontalSpacer8
-import com.example.yocipe.ui.utils.VerticalSpacer8
+import com.example.yocipe.ui.utils.Spacer16Vertical
+import com.example.yocipe.ui.utils.Spacer8Horizontal
+import com.example.yocipe.ui.utils.Spacer8Vertical
 
 @Composable
 fun RecipeContent(
@@ -47,12 +55,13 @@ fun RecipeContent(
     val modifier = Modifier.padding(horizontal = dimen16)
     ScrollableColumn {
         RecipeHeaderImage(recipe)
-        Text(text = recipe.name, style = MaterialTheme.typography.h4, modifier = modifier)
-        Spacer(Modifier.preferredHeight(dimen16))
-        IngredientsList(recipe, modifier)
-        Spacer(Modifier.preferredHeight(dimen16))
-        InstructionsList(recipe, modifier)
-        Spacer(Modifier.preferredHeight(dimen16))
+        Spacer16Vertical()
+        Text(text = recipe.name, style = TypographyH4(), modifier = modifier)
+        Spacer16Vertical()
+        Ingredients(recipe, modifier)
+        Spacer16Vertical()
+        Instructions(recipe, modifier)
+        Spacer16Vertical()
     }
 }
 
@@ -60,45 +69,42 @@ fun RecipeContent(
 private fun RecipeHeaderImage(recipe: Recipe) {
     recipe.image?.let { image ->
         val imageModifier = Modifier
-            .preferredHeightIn(minHeight = 180.dp, maxHeight = 220.dp)
+            .preferredHeightIn(minHeight = dimen180, maxHeight = dimen220)
             .fillMaxWidth()
         Image(asset = image, imageModifier, contentScale = ContentScale.Crop)
-        Spacer(modifier = Modifier.preferredHeight(dimen16))
     }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun IngredientsList(recipe: Recipe, modifier: Modifier) {
+private fun Ingredients(recipe: Recipe, modifier: Modifier) {
     val recipeServingsNumber = recipe.servings.split(" ")[0].toDouble()
     val recipeServingsUnit = recipe.servings.split(" ")[1]
+
     var ratio by savedInstanceState { 1.0 }
     var servings by savedInstanceState { recipeServingsNumber }
 
     var halfButtonEnable by savedInstanceState { true }
-    var doubleButtonEnabled by savedInstanceState{true}
-
-
-
-
-
+    var doubleButtonEnabled by savedInstanceState { true }
 
     Column(modifier = modifier) {
         Text(
             text = stringResource(id = R.string.ingredients_list),
-            style = MaterialTheme.typography.h6
+            style = TypographyH6()
         )
-        VerticalSpacer8()
+        Spacer8Vertical()
 
-
+        /* ************************************************************************************* *
+         *                            Quick adjust: X0.5 X2.0 Reset                              *
+         * ************************************************************************************* */
         Row(
             verticalGravity = Alignment.CenterVertically,
         ) {
             Text(
-                text = "Quick adjust:",
-                style = MaterialTheme.typography.body2
+                text = stringResource(id = R.string.quick_adjust),
+                style = TypographyBody2()
             )
-            HorizontalSpacer8()
+            Spacer8Horizontal()
             TextButton(
                 enabled = halfButtonEnable && servings.toInt().rem(2) == 0,
                 contentColor = MaterialTheme.colors.onSurface,
@@ -107,30 +113,30 @@ private fun IngredientsList(recipe: Recipe, modifier: Modifier) {
                     ratio = servings / recipeServingsNumber
                 },
                 border = BorderStroke(0.5.dp, colorResource(R.color.orange700)),
-                modifier = Modifier.preferredWidth(52.dp)
+                modifier = Modifier.preferredWidth(dimen52)
             ) {
                 Text(
-                    text = "X0.5",
-                    style = MaterialTheme.typography.button
+                    text = stringResource(id = R.string.half_button),
+                    style = TypographyButton()
                 )
             }
-            HorizontalSpacer8()
+            Spacer8Horizontal()
             TextButton(
                 enabled = doubleButtonEnabled && servings.toInt() <= 50,
                 contentColor = MaterialTheme.colors.onSurface,
-                onClick = { ratio = 2.0
+                onClick = {
                     servings *= 2
                     ratio = servings / recipeServingsNumber
                 },
                 border = BorderStroke(0.5.dp, colorResource(R.color.orange700)),
-                modifier = Modifier.preferredWidth(52.dp)
+                modifier = Modifier.preferredWidth(dimen52)
             ) {
                 Text(
-                    text = "X2.0",
-                    style = MaterialTheme.typography.button
+                    text = stringResource(id = R.string.double_button),
+                    style = TypographyButton()
                 )
             }
-            HorizontalSpacer8()
+            Spacer8Horizontal()
             TextButton(
                 contentColor = MaterialTheme.colors.onSurface,
                 onClick = {
@@ -142,14 +148,16 @@ private fun IngredientsList(recipe: Recipe, modifier: Modifier) {
                 border = BorderStroke(0.5.dp, colorResource(R.color.orange700))
             ) {
                 Text(
-                    text = "Reset",
-                    style = MaterialTheme.typography.button
+                    text = stringResource(id = R.string.reset),
+                    style = TypographyButton()
                 )
             }
         }
+        Spacer8Vertical()
 
-        VerticalSpacer8()
-
+        /* ************************************************************************************* *
+         *                                    < 4 > pizzor                                       *
+         * ************************************************************************************* */
         Row(verticalGravity = Alignment.CenterVertically) {
             IconButton(
                 onClick = {
@@ -161,9 +169,7 @@ private fun IngredientsList(recipe: Recipe, modifier: Modifier) {
             ) {
                 Icon(Icons.Filled.ArrowLeft)
             }
-
-            Text(text = formatServings(servings))
-
+            Text(text = formatDisplayNumber(servings))
             IconButton(
                 onClick = {
                     if (servings <= 99) {
@@ -174,16 +180,15 @@ private fun IngredientsList(recipe: Recipe, modifier: Modifier) {
             ) {
                 Icon(Icons.Filled.ArrowRight)
             }
-
             Text(text = recipeServingsUnit)
         }
+        Spacer8Vertical()
 
-        VerticalSpacer8()
         recipe.ingredients.forEach { ingredient ->
             SingleIngredient(
                 ingredient = ingredient,
                 ratio = ratio,
-                modifier = Modifier.padding(top = 4.dp, bottom = 4.dp)
+                modifier = Modifier.padding(top = dimen4, bottom = dimen4)
             )
             Divider(Modifier.padding(horizontal = dimen0))
         }
@@ -197,38 +202,36 @@ private fun SingleIngredient(
     modifier: Modifier
 ) {
     val amountDigit = ingredient.second.split(" ")[0].toDouble() * ratio
-    val amountString =
-        "%.1f".format(amountDigit).dropLastWhile { it == '0' }.dropLastWhile { it == ',' }
+    val amountString = formatDisplayNumber(amountDigit)
     val measurementUnit = ingredient.second.split(" ")[1]
 
     Row(modifier) {
-        ProvideEmphasis(EmphasisAmbient.current.medium) {
-            val textStyle = MaterialTheme.typography.subtitle1
+        ProvideEmphasis(EmphasisAmbientMedium()) {
             Text(
                 text = ingredient.first,
-                style = textStyle,
+                style = TypographySubtitle1(),
                 modifier = Modifier.weight(1.0f)
             )
             Text(
                 text = "$amountString $measurementUnit",
-                style = textStyle
+                style = TypographySubtitle1()
             )
         }
     }
 }
 
 @Composable
-private fun InstructionsList(recipe: Recipe, modifier: Modifier) {
+private fun Instructions(recipe: Recipe, modifier: Modifier) {
     Column(modifier = modifier) {
         Text(
             text = stringResource(id = R.string.instructions_list),
-            style = MaterialTheme.typography.h6
+            style = TypographyH6()
         )
-        Spacer(Modifier.preferredHeight(8.dp))
+        Spacer8Vertical()
         recipe.instructions.forEach { instruction ->
             SingleInstruction(
                 instruction = instruction,
-                modifier = Modifier.padding(top = 4.dp, bottom = 4.dp)
+                modifier = Modifier.padding(top = dimen4, bottom = dimen4)
             )
             Divider(Modifier.padding(horizontal = dimen0))
         }
@@ -241,15 +244,14 @@ private fun SingleInstruction(
     modifier: Modifier
 ) {
     Row(modifier) {
-        ProvideEmphasis(EmphasisAmbient.current.medium) {
-            val textStyle = MaterialTheme.typography.subtitle1
+        ProvideEmphasis(EmphasisAmbientMedium()) {
             Text(
                 text = instruction,
-                style = textStyle
+                style = TypographySubtitle1()
             )
         }
     }
 }
 
-fun formatServings(servings: Double): String =
-    "%.1f".format(servings).dropLastWhile { it == '0' }.dropLastWhile { it == ',' }
+fun formatDisplayNumber(number: Double): String =
+    "%.1f".format(number).dropLastWhile { it == '0' }.dropLastWhile { it == ',' || it == '.' }
