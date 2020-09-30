@@ -119,7 +119,8 @@ val recipe1 = Recipe(
     imageId = R.drawable.image_recipe_1,
     name = "Blåbärssmoothie",
     ingredients = ingredients_1,
-    instructions = instructions_1
+    instructions = instructions_1,
+    servings = "2 glas"
 )
 
 val recipe2 = Recipe(
@@ -127,7 +128,8 @@ val recipe2 = Recipe(
     imageId = R.drawable.image_recipe_2,
     name = "Lingonlassi",
     ingredients = ingredients_2,
-    instructions = instructions_2
+    instructions = instructions_2,
+    servings = "2 glas"
 )
 
 val recipe3 = Recipe(
@@ -135,7 +137,8 @@ val recipe3 = Recipe(
     imageId = R.drawable.image_recipe_3,
     name = "Mangolassi",
     ingredients = ingredients_3,
-    instructions = instructions_3
+    instructions = instructions_3,
+    servings = "2 glas"
 )
 
 val recipe4 = Recipe(
@@ -143,7 +146,8 @@ val recipe4 = Recipe(
     imageId = R.drawable.image_recipe_4,
     name = "Hallonsmoothie",
     ingredients = ingredients_4,
-    instructions = instructions_4
+    instructions = instructions_4,
+    servings = "2 glas"
 )
 
 val recipe5 = Recipe(
@@ -151,7 +155,8 @@ val recipe5 = Recipe(
     imageId = R.drawable.image_recipe_5,
     name = "Kanelbullar",
     ingredients = ingredients_5,
-    instructions = instructions_5
+    instructions = instructions_5,
+    servings = "40 bullar"
 )
 
 val recipe6 = Recipe(
@@ -159,7 +164,8 @@ val recipe6 = Recipe(
     imageId = R.drawable.image_recipe_6,
     name = "Pizza Bianca med Västerbottensost® och löjrom",
     ingredients = ingredients_6,
-    instructions = instructions_6
+    instructions = instructions_6,
+    servings = "4 pizzor"
 )
 
 val recipes: List<Recipe> =

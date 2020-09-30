@@ -26,7 +26,7 @@ import com.example.yocipe.ui.theme.typographyBody2
 import com.example.yocipe.ui.theme.typographyH6
 import com.example.yocipe.ui.theme.typographySubtitle1
 import com.example.yocipe.ui.utils.Divider
-import com.example.yocipe.ui.utils.Spacer16
+import com.example.yocipe.ui.utils.VerticalSpacer16
 import com.example.yocipe.utils.yocipeToUppercase
 
 @Composable
@@ -55,7 +55,7 @@ private fun RecipeCardHighlight(recipe: Recipe, modifier: Modifier = Modifier) {
                 .clip(shape = MaterialTheme.shapes.medium)
             Image(image, modifier = imageModifier, contentScale = ContentScale.Crop)
         }
-        Spacer16()
+        VerticalSpacer16()
         ProvideEmphasis(EmphasisAmbientHigh()) {
             Text(
                 text = recipe.name,

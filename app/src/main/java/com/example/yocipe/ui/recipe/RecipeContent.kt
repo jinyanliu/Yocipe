@@ -1,6 +1,8 @@
 package com.example.yocipe.ui.recipe
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Icon
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.Text
@@ -13,16 +15,19 @@ import androidx.compose.foundation.layout.preferredHeight
 import androidx.compose.foundation.layout.preferredHeightIn
 import androidx.compose.foundation.layout.preferredWidth
 import androidx.compose.material.EmphasisAmbient
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ProvideEmphasis
 import androidx.compose.material.TextButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowLeft
+import androidx.compose.material.icons.filled.ArrowRight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.savedinstancestate.savedInstanceState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -32,6 +37,8 @@ import com.example.yocipe.model.Recipe
 import com.example.yocipe.ui.theme.dimen0
 import com.example.yocipe.ui.theme.dimen16
 import com.example.yocipe.ui.utils.Divider
+import com.example.yocipe.ui.utils.HorizontalSpacer8
+import com.example.yocipe.ui.utils.VerticalSpacer8
 
 @Composable
 fun RecipeContent(
@@ -60,17 +67,30 @@ private fun RecipeHeaderImage(recipe: Recipe) {
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun IngredientsList(recipe: Recipe, modifier: Modifier) {
-
+    val recipeServingsNumber = recipe.servings.split(" ")[0].toDouble()
+    val recipeServingsUnit = recipe.servings.split(" ")[1]
     var ratio by savedInstanceState { 1.0 }
+    var servings by savedInstanceState { recipeServingsNumber }
+
+    var halfButtonEnable by savedInstanceState { true }
+    var doubleButtonEnabled by savedInstanceState{true}
+
+
+
+
+
 
     Column(modifier = modifier) {
         Text(
             text = stringResource(id = R.string.ingredients_list),
             style = MaterialTheme.typography.h6
         )
-        Spacer(Modifier.preferredHeight(8.dp))
+        VerticalSpacer8()
+
+
         Row(
             verticalGravity = Alignment.CenterVertically,
         ) {
@@ -78,10 +98,14 @@ private fun IngredientsList(recipe: Recipe, modifier: Modifier) {
                 text = "Quick adjust:",
                 style = MaterialTheme.typography.body2
             )
-            Spacer(Modifier.preferredWidth(8.dp))
+            HorizontalSpacer8()
             TextButton(
+                enabled = halfButtonEnable && servings.toInt().rem(2) == 0,
                 contentColor = MaterialTheme.colors.onSurface,
-                onClick = { ratio *= 0.5 },
+                onClick = {
+                    servings /= 2
+                    ratio = servings / recipeServingsNumber
+                },
                 border = BorderStroke(0.5.dp, colorResource(R.color.orange700)),
                 modifier = Modifier.preferredWidth(52.dp)
             ) {
@@ -90,10 +114,14 @@ private fun IngredientsList(recipe: Recipe, modifier: Modifier) {
                     style = MaterialTheme.typography.button
                 )
             }
-            Spacer(Modifier.preferredWidth(8.dp))
+            HorizontalSpacer8()
             TextButton(
+                enabled = doubleButtonEnabled && servings.toInt() <= 50,
                 contentColor = MaterialTheme.colors.onSurface,
-                onClick = { ratio *= 2 },
+                onClick = { ratio = 2.0
+                    servings *= 2
+                    ratio = servings / recipeServingsNumber
+                },
                 border = BorderStroke(0.5.dp, colorResource(R.color.orange700)),
                 modifier = Modifier.preferredWidth(52.dp)
             ) {
@@ -102,22 +130,15 @@ private fun IngredientsList(recipe: Recipe, modifier: Modifier) {
                     style = MaterialTheme.typography.button
                 )
             }
-            Spacer(Modifier.preferredWidth(8.dp))
+            HorizontalSpacer8()
             TextButton(
                 contentColor = MaterialTheme.colors.onSurface,
-                onClick = { ratio *= 3 },
-                border = BorderStroke(0.5.dp, colorResource(R.color.orange700)),
-                modifier = Modifier.preferredWidth(52.dp)
-            ) {
-                Text(
-                    text = "X3.0",
-                    style = MaterialTheme.typography.button
-                )
-            }
-            Spacer(Modifier.preferredWidth(8.dp))
-            TextButton(
-                contentColor = MaterialTheme.colors.onSurface,
-                onClick = { ratio = 1.0 },
+                onClick = {
+                    ratio = 1.0
+                    servings = recipeServingsNumber
+                    halfButtonEnable = true
+                    doubleButtonEnabled = true
+                },
                 border = BorderStroke(0.5.dp, colorResource(R.color.orange700))
             ) {
                 Text(
@@ -126,7 +147,38 @@ private fun IngredientsList(recipe: Recipe, modifier: Modifier) {
                 )
             }
         }
-        Spacer(Modifier.preferredHeight(8.dp))
+
+        VerticalSpacer8()
+
+        Row(verticalGravity = Alignment.CenterVertically) {
+            IconButton(
+                onClick = {
+                    if (servings >= 2) {
+                        servings -= 1
+                        ratio = servings / recipeServingsNumber
+                    }
+                }
+            ) {
+                Icon(Icons.Filled.ArrowLeft)
+            }
+
+            Text(text = formatServings(servings))
+
+            IconButton(
+                onClick = {
+                    if (servings <= 99) {
+                        servings += 1
+                        ratio = servings / recipeServingsNumber
+                    }
+                }
+            ) {
+                Icon(Icons.Filled.ArrowRight)
+            }
+
+            Text(text = recipeServingsUnit)
+        }
+
+        VerticalSpacer8()
         recipe.ingredients.forEach { ingredient ->
             SingleIngredient(
                 ingredient = ingredient,
@@ -198,3 +250,6 @@ private fun SingleInstruction(
         }
     }
 }
+
+fun formatServings(servings: Double): String =
+    "%.1f".format(servings).dropLastWhile { it == '0' }.dropLastWhile { it == ',' }

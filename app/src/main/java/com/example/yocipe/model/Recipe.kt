@@ -9,5 +9,6 @@ data class Recipe(
         val name: String,
         val ingredients: List<Pair<String, String>>,
         val instructions: List<String>,
-        val notes: List<String> = emptyList()
+        val notes: List<String> = emptyList(),
+        val servings:String
 )
