@@ -17,6 +17,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.RestaurantMenu
 import androidx.compose.runtime.Composable
@@ -36,6 +37,9 @@ import com.example.yocipe.ui.recipe.RecipeScreen
 import com.example.yocipe.ui.theme.YocipeTheme
 import com.example.yocipe.ui.theme.dimen8
 import com.example.yocipe.ui.utils.Divider
+import com.example.yocipe.ui.utils.Spacer16Vertical
+import com.example.yocipe.ui.utils.Spacer24Vertical
+import com.example.yocipe.ui.utils.SpacerFillMax
 
 @Composable
 fun YocipeApp(
@@ -104,6 +108,14 @@ fun AppDrawer(
                 closeDrawer()
             }
         )
+        SpacerFillMax()
+        DrawerButton(
+            icon = Icons.Filled.Settings,
+            label = "Developed by Jinyan Liu",
+            isSelected = false,
+            action = {}
+        )
+        Spacer24Vertical()
     }
 }
 

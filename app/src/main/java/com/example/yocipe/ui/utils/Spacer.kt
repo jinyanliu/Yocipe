@@ -7,19 +7,24 @@ import androidx.compose.foundation.layout.preferredWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.yocipe.ui.theme.dimen16
+import com.example.yocipe.ui.theme.dimen24
 import com.example.yocipe.ui.theme.dimen8
 
 @Composable
-fun Spacer16Vertical() = Spacer(Modifier.preferredHeight(dimen16))
+fun SpacerFillMax()=  Spacer(modifier = Modifier.weight(1f))
 
 @Composable
-fun Spacer8Vertical() = Spacer(Modifier.preferredHeight(dimen8))
+fun Spacer24Vertical() = Spacer(Modifier.preferredHeight(dimen24))
+@Composable
+fun Spacer24Horizontal() = Spacer(Modifier.preferredWidth(dimen24))
 
+@Composable
+fun Spacer16Vertical() = Spacer(Modifier.preferredHeight(dimen16))
 @Composable
 fun Spacer16Horizontal() = Spacer(Modifier.preferredWidth(dimen16))
 
 @Composable
+fun Spacer8Vertical() = Spacer(Modifier.preferredHeight(dimen8))
+@Composable
 fun Spacer8Horizontal() = Spacer(Modifier.preferredWidth(dimen8))
 
-@Composable
-fun SpacerFillMax()=  Spacer(modifier = Modifier.weight(1f))

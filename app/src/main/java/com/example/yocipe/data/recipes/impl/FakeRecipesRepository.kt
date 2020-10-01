@@ -45,7 +45,7 @@ class FakeRecipesRepository (
 
     override suspend fun getRecipes(): Result<List<Recipe>> {
         return withContext(Dispatchers.IO) {
-            delay(800)
+            delay(400)
             if (shouldRandomlyFail()) {
                 Result.Error(IllegalStateException())
             } else {
@@ -66,5 +66,5 @@ class FakeRecipesRepository (
 
     private var requestCount = 0
 
-    private fun shouldRandomlyFail(): Boolean = ++requestCount % 5 == 0
+    private fun shouldRandomlyFail(): Boolean = ++requestCount % 20 == 0
 }
