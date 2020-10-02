@@ -6,7 +6,5 @@ import androidx.core.os.ConfigurationCompat
 
 @Composable
 fun String.yocipeToUppercase() = this.toUpperCase(
-    ConfigurationCompat.getLocales(
-        ConfigurationAmbient.current
-    ).get(0)
+    ConfigurationCompat.getLocales(ConfigurationAmbient.current).get(0)
 )

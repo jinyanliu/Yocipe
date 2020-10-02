@@ -88,7 +88,7 @@ private fun Ingredients(recipe: Recipe, modifier: Modifier) {
 
     Column(modifier = modifier) {
         Text(
-            text = stringResource(id = R.string.ingredients_list),
+            text = stringResource(id = R.string.ingredients),
             style = TypographyH6()
         )
         Spacer8Vertical()
@@ -223,7 +223,7 @@ private fun SingleIngredient(
 private fun Instructions(recipe: Recipe, modifier: Modifier) {
     Column(modifier = modifier) {
         Text(
-            text = stringResource(id = R.string.instructions_list),
+            text = stringResource(id = R.string.instructions),
             style = TypographyH6()
         )
         Spacer8Vertical()

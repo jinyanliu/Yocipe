@@ -34,7 +34,7 @@ import com.example.yocipe.utils.ErrorSnackbar
 import com.example.yocipe.utils.launchUiStateProducer
 
 @Composable
-fun FavoriteScreen(
+fun FavoritesScreen(
     navigateTo: (Screen) -> Unit,
     recipesRepository: RecipesRepository,
     scaffoldState: ScaffoldState = rememberScaffoldState()
@@ -45,7 +45,7 @@ fun FavoriteScreen(
 
     val favorites by recipesRepository.observeFavorites().collectAsState(setOf())
 
-    FavoriteScreen(
+    FavoritesScreen(
         recipes = recipeUiState.value,
         favorites = favorites,
         onRefreshRecipes = refreshRecipe,
@@ -56,7 +56,7 @@ fun FavoriteScreen(
 }
 
 @Composable
-private fun FavoriteScreen(
+private fun FavoritesScreen(
     recipes: UiState<List<Recipe>>,
     favorites: Set<String>,
     onRefreshRecipes: () -> Unit,
@@ -68,7 +68,7 @@ private fun FavoriteScreen(
         scaffoldState = scaffoldState,
         drawerContent = {
             AppDrawer(
-                currentScreen = Screen.Favorite,
+                currentScreen = Screen.Favorites,
                 closeDrawer = {
                     scaffoldState.drawerState.close()
                 },
@@ -77,7 +77,7 @@ private fun FavoriteScreen(
         },
         topBar = {
             TopAppBar(
-                title = { Text(text = stringResource(id = R.string.screen_favorite)) },
+                title = { Text(text = stringResource(id = R.string.screen_favorites)) },
                 navigationIcon = {
                     IconButton(onClick = { scaffoldState.drawerState.open() }) {
                         Icon(Icons.Rounded.RestaurantMenu)
@@ -125,9 +125,9 @@ private fun FavoriteScreenErrorAndContent(
                 FavoriteScreenContent(favoriteRecipes, navigateTo)
             } else {
                 FullScreenMessage(
-                    mainMessage = stringResource(id = R.string.empty_favorite_main_message),
-                    instructionMessage = stringResource(id = R.string.empty_favorite_instruction_message),
-                    textButtonMessage = stringResource(id = R.string.empty_favorite_text_button_message)
+                    mainMessage = stringResource(id = R.string.empty_favorites_main_message),
+                    instructionMessage = stringResource(id = R.string.empty_favorites_instruction_message),
+                    textButtonMessage = stringResource(id = R.string.empty_favorites_text_button_message)
                 ) {
                     navigateTo(Screen.Home)
                 }

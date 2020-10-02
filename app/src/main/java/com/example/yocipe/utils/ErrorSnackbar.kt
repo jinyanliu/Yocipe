@@ -42,7 +42,7 @@ fun ErrorSnackbar(
     ) {
         Snackbar(
             modifier = Modifier.padding(dimen16),
-            text = { Text(stringResource(id = R.string.error_snack_bar_cannot_update_recipes)) },
+            text = { Text(stringResource(id = R.string.cannot_update_recipes)) },
             action = {
                 TextButton(
                     onClick = {
@@ -52,7 +52,7 @@ fun ErrorSnackbar(
                     contentColor = contentColor()
                 ) {
                     Text(
-                        text = stringResource(id = R.string.error_snack_bar_retry).yocipeToUppercase(),
+                        text = stringResource(id = R.string.retry).yocipeToUppercase(),
                         color = MaterialTheme.colors.snackbarAction
                     )
                 }

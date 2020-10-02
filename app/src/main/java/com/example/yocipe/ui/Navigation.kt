@@ -9,11 +9,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.yocipe.utils.getMutableStateOf
 
-enum class ScreenName { HOME, FAVORITE, RECIPE }
+enum class ScreenName { HOME, FAVORITES, RECIPE }
 
 sealed class Screen(val id: ScreenName) {
     object Home : Screen(ScreenName.HOME)
-    object Favorite : Screen(ScreenName.FAVORITE)
+    object Favorites : Screen(ScreenName.FAVORITES)
     data class Recipe(val recipeId: String) : Screen(ScreenName.RECIPE)
 }
 
@@ -23,7 +23,6 @@ private const val SIS_RECIPE = "recipe"
 
 private fun Screen.toBundle(): Bundle {
     return bundleOf(SIS_NAME to id.name).also {
-        // add extra keys for various types here
         if (this is Screen.Recipe) {
             it.putString(SIS_RECIPE, recipeId)
         }
@@ -33,7 +32,7 @@ private fun Screen.toBundle(): Bundle {
 private fun Bundle.toScreen(): Screen {
     return when (ScreenName.valueOf(getStringOrThrow(SIS_NAME))) {
         ScreenName.HOME -> Screen.Home
-        ScreenName.FAVORITE -> Screen.Favorite
+        ScreenName.FAVORITES -> Screen.Favorites
         ScreenName.RECIPE -> {
             val recipeId = getStringOrThrow(SIS_RECIPE)
             Screen.Recipe(recipeId)
@@ -44,16 +43,16 @@ private fun Bundle.toScreen(): Screen {
 private fun Bundle.getStringOrThrow(key: String) =
     requireNotNull(getString(key)) { "Missing key '$key' in $this" }
 
-class NavigationViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() {
+class NavigationViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
     var lastScreen: Screen? = null
 
-    var currentScreen: Screen by savedStateHandle.getMutableStateOf<Screen>(
+    var currentScreen: Screen by savedStateHandle.getMutableStateOf(
         key = SIS_SCREEN,
         default = Screen.Home,
         save = { it.toBundle() },
         restore = { it.toScreen() }
     )
-        private set // limit the writes to only inside this class.
+        private set
 
     @MainThread
     fun onBack(): Boolean {

@@ -3,18 +3,13 @@ package com.example.yocipe.data
 import android.content.Context
 import com.example.yocipe.data.recipes.RecipesRepository
 import com.example.yocipe.data.recipes.impl.FakeRecipesRepository
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-interface AppContainer{
+interface AppContainer {
     val recipesRepository: RecipesRepository
 }
 
-class AppContainerImpl(private val applicationContext: Context): AppContainer{
-
-    @ExperimentalCoroutinesApi
+class AppContainerImpl(private val applicationContext: Context) : AppContainer {
     override val recipesRepository: RecipesRepository by lazy {
-        FakeRecipesRepository(
-                resources = applicationContext.resources
-        )
+        FakeRecipesRepository(resources = applicationContext.resources)
     }
 }

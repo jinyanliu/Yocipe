@@ -34,7 +34,7 @@ fun RecipeCardHighlightSection(recipe: Recipe, navigateTo: (Screen) -> Unit) {
     ProvideEmphasis(emphasis = EmphasisAmbientHigh()) {
         Text(
             modifier = Modifier.padding(start = dimen16, top = dimen16, end = dimen16),
-            text = "Top recipe for you",
+            text = stringResource(id = R.string.top_recipe_for_you),
             style = TypographySubtitle1()
         )
     }

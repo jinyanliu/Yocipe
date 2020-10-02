@@ -7,11 +7,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.example.yocipe.ui.theme.TypographyBody2
 import com.example.yocipe.ui.theme.dimen16
 import com.example.yocipe.ui.theme.dimen8
 
@@ -24,7 +24,6 @@ fun FullScreen(action: @Composable () -> Unit) = Box(
 ) {
     action()
 }
-
 
 @Composable
 fun FullScreenLoading() = FullScreen { CircularProgressIndicator() }
@@ -44,17 +43,16 @@ fun FullScreenMessage(
     textButtonAction: () -> Unit
 ) = FullScreen {
     Column {
-        val textStyle = MaterialTheme.typography.body2
         mainMessage?.let {
             Text(
                 text = it,
-                style = textStyle
+                style = TypographyBody2()
             )
         }
         instructionMessage?.let {
             Text(
                 text = it,
-                style = textStyle,
+                style = TypographyBody2(),
                 modifier = Modifier.padding(top = dimen8)
             )
         }
@@ -65,7 +63,7 @@ fun FullScreenMessage(
             ) {
                 Text(
                     text = it,
-                    style = textStyle
+                    style = TypographyBody2()
                 )
             }
         }

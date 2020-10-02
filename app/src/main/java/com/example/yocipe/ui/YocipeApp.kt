@@ -27,17 +27,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.VectorAsset
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.example.yocipe.R
 import com.example.yocipe.data.AppContainer
 import com.example.yocipe.data.recipes.RecipesRepository
-import com.example.yocipe.ui.favorites.FavoriteScreen
+import com.example.yocipe.ui.favorites.FavoritesScreen
 import com.example.yocipe.ui.home.HomeScreen
 import com.example.yocipe.ui.recipe.RecipeScreen
+import com.example.yocipe.ui.theme.TypographyBody2
+import com.example.yocipe.ui.theme.TypographyH6
 import com.example.yocipe.ui.theme.YocipeTheme
+import com.example.yocipe.ui.theme.dimen16
+import com.example.yocipe.ui.theme.dimen24
 import com.example.yocipe.ui.theme.dimen8
 import com.example.yocipe.ui.utils.Divider
-import com.example.yocipe.ui.utils.Spacer16Vertical
 import com.example.yocipe.ui.utils.Spacer24Vertical
 import com.example.yocipe.ui.utils.SpacerFillMax
 
@@ -66,7 +68,7 @@ private fun AppContent(
                     navigateTo = navigationViewModel::navigateTo,
                     recipesRepository = recipesRepository
                 )
-                is Screen.Favorite -> FavoriteScreen(
+                is Screen.Favorites -> FavoritesScreen(
                     navigateTo = navigationViewModel::navigateTo,
                     recipesRepository = recipesRepository
                 )
@@ -87,8 +89,8 @@ fun AppDrawer(
     closeDrawer: () -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
-        Spacer(Modifier.preferredHeight(24.dp))
-        YocipeLogo(Modifier.padding(16.dp))
+        Spacer(Modifier.preferredHeight(dimen24))
+        YocipeLogo(Modifier.padding(dimen16))
         Divider(Modifier.padding(horizontal = dimen8))
         DrawerButton(
             icon = Icons.Filled.Home,
@@ -101,17 +103,17 @@ fun AppDrawer(
         )
         DrawerButton(
             icon = Icons.Rounded.Favorite,
-            label = stringResource(R.string.screen_favorite),
-            isSelected = currentScreen == Screen.Favorite,
+            label = stringResource(R.string.screen_favorites),
+            isSelected = currentScreen == Screen.Favorites,
             action = {
-                navigateTo(Screen.Favorite)
+                navigateTo(Screen.Favorites)
                 closeDrawer()
             }
         )
         SpacerFillMax()
         DrawerButton(
             icon = Icons.Filled.Settings,
-            label = "Developed by Jinyan Liu",
+            label = stringResource(id = R.string.developed_by_jinyan_liu),
             isSelected = false,
             action = {}
         )
@@ -126,10 +128,10 @@ private fun YocipeLogo(modifier: Modifier = Modifier) {
             asset = Icons.Rounded.RestaurantMenu,
             colorFilter = ColorFilter.tint(MaterialTheme.colors.primary)
         )
-        Spacer(Modifier.preferredWidth(8.dp))
+        Spacer(Modifier.preferredWidth(dimen8))
         Text(
             text = stringResource(R.string.app_name),
-            style = MaterialTheme.typography.h6,
+            style = TypographyH6(),
             color = MaterialTheme.colors.onSurface
         )
     }
@@ -161,7 +163,7 @@ private fun DrawerButton(
     }
 
     val surfaceModifier = modifier
-        .padding(start = 8.dp, top = 8.dp, end = 8.dp)
+        .padding(start = dimen8, top = dimen8, end = dimen8)
         .fillMaxWidth()
     Surface(
         modifier = surfaceModifier,
@@ -182,15 +184,14 @@ private fun DrawerButton(
                     colorFilter = ColorFilter.tint(textIconColor),
                     alpha = imageAlpha
                 )
-                Spacer(modifier.preferredWidth(16.dp))
+                Spacer(modifier.preferredWidth(dimen16))
                 Text(
                     text = label,
-                    style = MaterialTheme.typography.body2,
+                    style = TypographyBody2(),
                     color = textIconColor,
                     modifier = Modifier.fillMaxWidth()
                 )
             }
-
         }
     }
 }

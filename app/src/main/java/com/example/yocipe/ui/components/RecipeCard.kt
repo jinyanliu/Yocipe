@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.preferredSize
-import androidx.compose.material.EmphasisAmbient
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ProvideEmphasis
 import androidx.compose.runtime.Composable
@@ -19,6 +18,10 @@ import androidx.compose.ui.res.imageResource
 import com.example.yocipe.R
 import com.example.yocipe.model.Recipe
 import com.example.yocipe.ui.Screen
+import com.example.yocipe.ui.theme.EmphasisAmbientHigh
+import com.example.yocipe.ui.theme.EmphasisAmbientMedium
+import com.example.yocipe.ui.theme.TypographyBody2
+import com.example.yocipe.ui.theme.TypographySubtitle1
 import com.example.yocipe.ui.theme.dimen16
 import com.example.yocipe.ui.theme.dimen40
 
@@ -57,17 +60,14 @@ fun RecipeImage(recipe: Recipe) {
 
 @Composable
 fun RecipeTitle(recipe: Recipe) {
-    ProvideEmphasis(EmphasisAmbient.current.high) {
-        Text(recipe.name, style = MaterialTheme.typography.subtitle1)
+    ProvideEmphasis(EmphasisAmbientHigh()) {
+        Text(recipe.name, style = TypographySubtitle1())
     }
 }
 
 @Composable
 fun FirstInstruction(recipe: Recipe) {
-    ProvideEmphasis(emphasis = EmphasisAmbient.current.medium) {
-        Text(
-            text = recipe.instructions[0],
-            style = MaterialTheme.typography.body2
-        )
+    ProvideEmphasis(EmphasisAmbientMedium()) {
+        Text(text = recipe.instructions[0], style = TypographyBody2())
     }
 }

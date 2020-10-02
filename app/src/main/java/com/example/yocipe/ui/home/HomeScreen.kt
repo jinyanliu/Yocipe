@@ -89,9 +89,7 @@ fun HomeScreen(
                 content = {
                     HomeScreenErrorAndContent(
                         recipes = recipes,
-                        onRefresh = {
-                            onRefreshRecipes()
-                        },
+                        onRefresh = { onRefreshRecipes() },
                         onErrorDismiss = onErrorDismiss,
                         navigateTo = navigateTo,
                         modifier = modifier

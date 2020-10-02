@@ -13,9 +13,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.gesture.scrollorientationlocking.Orientation
 import androidx.compose.ui.platform.DensityAmbient
-import androidx.compose.ui.unit.dp
+import com.example.yocipe.ui.theme.dimen80
 
-private val RefreshDistance = 80.dp
+private val RefreshDistance = dimen80
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
