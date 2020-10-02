@@ -2,6 +2,7 @@ package com.example.yocipe.model
 
 import androidx.annotation.DrawableRes
 import androidx.compose.ui.graphics.ImageAsset
+import com.example.yocipe.data.recipes.impl.UnitSingular
 
 data class Recipe(
     val id: String,
@@ -11,5 +12,7 @@ data class Recipe(
     val ingredients: List<Pair<String, String>>,
     val instructions: List<String>,
     val notes: List<String> = emptyList(),
-    val servings: String
+    val servings: Int,
+    val servingsUnitSingular: UnitSingular,
+    val servingsUnitPlural: String,
 )

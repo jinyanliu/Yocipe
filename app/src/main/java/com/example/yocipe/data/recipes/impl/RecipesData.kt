@@ -3,6 +3,17 @@ package com.example.yocipe.data.recipes.impl
 import com.example.yocipe.R
 import com.example.yocipe.model.Recipe
 
+enum class UnitSingular(val label: String) {
+    GLAS("glas"), PIZZA("pizza"), BULLE("bulle")
+}
+
+private val unitSingularPlural: MutableMap<UnitSingular, String> =
+    mutableMapOf(
+        UnitSingular.GLAS to "glas",
+        UnitSingular.PIZZA to "pizzor",
+        UnitSingular.BULLE to "bullar"
+    )
+
 val ingredients_1 = listOf(
     Pair("Blåbär (frysta)", "3 dl"),
     Pair("Banan", "1 styck"),
@@ -120,7 +131,9 @@ val recipe1 = Recipe(
     name = "Blåbärssmoothie",
     ingredients = ingredients_1,
     instructions = instructions_1,
-    servings = "2 glas"
+    servings = 2,
+    servingsUnitSingular = UnitSingular.GLAS,
+    servingsUnitPlural = unitSingularPlural[UnitSingular.GLAS] ?: UnitSingular.GLAS.label
 )
 
 val recipe2 = Recipe(
@@ -129,7 +142,9 @@ val recipe2 = Recipe(
     name = "Lingonlassi",
     ingredients = ingredients_2,
     instructions = instructions_2,
-    servings = "2 glas"
+    servings = 2,
+    servingsUnitSingular = UnitSingular.GLAS,
+    servingsUnitPlural = unitSingularPlural[UnitSingular.GLAS] ?: UnitSingular.GLAS.label
 )
 
 val recipe3 = Recipe(
@@ -138,7 +153,9 @@ val recipe3 = Recipe(
     name = "Mangolassi",
     ingredients = ingredients_3,
     instructions = instructions_3,
-    servings = "2 glas"
+    servings = 2,
+    servingsUnitSingular = UnitSingular.GLAS,
+    servingsUnitPlural = unitSingularPlural[UnitSingular.GLAS] ?: UnitSingular.GLAS.label
 )
 
 val recipe4 = Recipe(
@@ -147,7 +164,9 @@ val recipe4 = Recipe(
     name = "Hallonsmoothie",
     ingredients = ingredients_4,
     instructions = instructions_4,
-    servings = "2 glas"
+    servings = 2,
+    servingsUnitSingular = UnitSingular.GLAS,
+    servingsUnitPlural = unitSingularPlural[UnitSingular.GLAS] ?: UnitSingular.GLAS.label
 )
 
 val recipe5 = Recipe(
@@ -156,7 +175,9 @@ val recipe5 = Recipe(
     name = "Kanelbullar",
     ingredients = ingredients_5,
     instructions = instructions_5,
-    servings = "40 bullar"
+    servings = 40,
+    servingsUnitSingular = UnitSingular.BULLE,
+    servingsUnitPlural = unitSingularPlural[UnitSingular.BULLE] ?: UnitSingular.BULLE.label
 )
 
 val recipe6 = Recipe(
@@ -165,7 +186,9 @@ val recipe6 = Recipe(
     name = "Pizza Bianca med Västerbottensost® och löjrom",
     ingredients = ingredients_6,
     instructions = instructions_6,
-    servings = "4 pizzor"
+    servings = 4,
+    servingsUnitSingular = UnitSingular.PIZZA,
+    servingsUnitPlural = unitSingularPlural[UnitSingular.PIZZA] ?: UnitSingular.PIZZA.label
 )
 
 val recipes: List<Recipe> =

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Yocipe</string>
     <string name="screen_home">Home</string>
-    <string name="screen_favorite">Favorite</string>
+    <string name="screen_favorite">Favorites</string>
 
     <string name="tap_to_load_content">Tap to load content</string>
     <string name="error_snack_bar_cannot_update_recipes">"Can\'t update recipes"</string>

@@ -29,19 +29,12 @@ fun RecipeCard(
 ) {
     Row(
         modifier = Modifier.clickable(onClick = {
-            navigateTo(
-                Screen.Recipe(
-                    recipe.id
-                )
-            )
+            navigateTo(Screen.Recipe(recipe.id))
         })
             .padding(dimen16),
         verticalGravity = Alignment.CenterVertically
     ) {
-        RecipeImage(
-            recipe,
-            Modifier.padding(end = dimen16)
-        )
+        RecipeImage(recipe)
         Column(modifier = Modifier.weight(1f)) {
             RecipeTitle(recipe)
             FirstInstruction(recipe)
@@ -50,11 +43,12 @@ fun RecipeCard(
 }
 
 @Composable
-fun RecipeImage(recipe: Recipe, modifier: Modifier = Modifier) {
+fun RecipeImage(recipe: Recipe) {
     val image = recipe.image ?: imageResource(id = R.drawable.placeholder)
     Image(
         asset = image,
-        modifier = modifier
+        modifier = Modifier
+            .padding(end = dimen16)
             .preferredSize(dimen40, dimen40)
             .clip(MaterialTheme.shapes.small),
         contentScale = ContentScale.Crop

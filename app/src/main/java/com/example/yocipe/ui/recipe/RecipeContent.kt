@@ -78,8 +78,7 @@ private fun RecipeHeaderImage(recipe: Recipe) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun Ingredients(recipe: Recipe, modifier: Modifier) {
-    val recipeServingsNumber = recipe.servings.split(" ")[0].toDouble()
-    val recipeServingsUnit = recipe.servings.split(" ")[1]
+    val recipeServingsNumber = recipe.servings.toDouble()
 
     var ratio by savedInstanceState { 1.0 }
     var servings by savedInstanceState { recipeServingsNumber }
@@ -180,7 +179,7 @@ private fun Ingredients(recipe: Recipe, modifier: Modifier) {
             ) {
                 Icon(Icons.Filled.ArrowRight)
             }
-            Text(text = recipeServingsUnit)
+            Text(text = if (servings > 1) recipe.servingsUnitPlural else recipe.servingsUnitSingular.label)
         }
         Spacer8Vertical()
 

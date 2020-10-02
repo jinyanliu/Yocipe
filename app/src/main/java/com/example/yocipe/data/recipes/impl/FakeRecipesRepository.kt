@@ -16,14 +16,14 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 
 @ExperimentalCoroutinesApi
-class FakeRecipesRepository (
-        private val resources:Resources
-):RecipesRepository{
+class FakeRecipesRepository(
+    private val resources: Resources
+) : RecipesRepository {
 
-    private val recipesWithResources:List<Recipe> by lazy {
-        recipes.map{
+    private val recipesWithResources: List<Recipe> by lazy {
+        recipes.map {
             it.copy(
-                   image = imageFromResource(resources, it.imageId)
+                image = imageFromResource(resources, it.imageId)
             )
         }
     }

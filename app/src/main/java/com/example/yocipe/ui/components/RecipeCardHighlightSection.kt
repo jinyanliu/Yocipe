@@ -19,12 +19,12 @@ import com.example.yocipe.model.Recipe
 import com.example.yocipe.ui.Screen
 import com.example.yocipe.ui.theme.EmphasisAmbientHigh
 import com.example.yocipe.ui.theme.EmphasisAmbientMedium
-import com.example.yocipe.ui.theme.dimen16
-import com.example.yocipe.ui.theme.dimen180
-import com.example.yocipe.ui.theme.dimen220
 import com.example.yocipe.ui.theme.TypographyBody2
 import com.example.yocipe.ui.theme.TypographyH6
 import com.example.yocipe.ui.theme.TypographySubtitle1
+import com.example.yocipe.ui.theme.dimen16
+import com.example.yocipe.ui.theme.dimen180
+import com.example.yocipe.ui.theme.dimen220
 import com.example.yocipe.ui.utils.Divider
 import com.example.yocipe.ui.utils.Spacer16Vertical
 import com.example.yocipe.utils.yocipeToUppercase
@@ -34,7 +34,7 @@ fun RecipeCardHighlightSection(recipe: Recipe, navigateTo: (Screen) -> Unit) {
     ProvideEmphasis(emphasis = EmphasisAmbientHigh()) {
         Text(
             modifier = Modifier.padding(start = dimen16, top = dimen16, end = dimen16),
-            text = "Top recipes for you",
+            text = "Top recipe for you",
             style = TypographySubtitle1()
         )
     }
