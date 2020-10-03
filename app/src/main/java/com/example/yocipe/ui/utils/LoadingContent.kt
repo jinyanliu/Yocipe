@@ -7,7 +7,6 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.yocipe.ui.SwipeToRefreshLayout
 import com.example.yocipe.ui.theme.dimen10
 import com.example.yocipe.ui.theme.dimen36
 import com.example.yocipe.ui.theme.dimen4

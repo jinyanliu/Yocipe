@@ -1,4 +1,4 @@
-package com.example.yocipe.ui
+package com.example.yocipe.ui.utils
 
 import androidx.compose.foundation.Box
 import androidx.compose.foundation.layout.Stack
