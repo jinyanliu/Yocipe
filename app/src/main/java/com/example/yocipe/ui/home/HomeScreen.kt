@@ -28,7 +28,7 @@ import com.example.yocipe.ui.state.UiState
 import com.example.yocipe.ui.utils.FullScreenLoading
 import com.example.yocipe.ui.utils.FullScreenTextButton
 import com.example.yocipe.ui.utils.LoadingContent
-import com.example.yocipe.utils.ErrorSnackbar
+import com.example.yocipe.ui.utils.ErrorSnackbar
 import com.example.yocipe.utils.launchUiStateProducer
 
 @Composable

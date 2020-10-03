@@ -1,4 +1,4 @@
-package com.example.yocipe.utils
+package com.example.yocipe.ui.utils
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import com.example.yocipe.R
 import com.example.yocipe.ui.theme.dimen16
 import com.example.yocipe.ui.theme.snackbarAction
+import com.example.yocipe.utils.yocipeToUppercase
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalAnimationApi::class)
